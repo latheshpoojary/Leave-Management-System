@@ -1,0 +1,31 @@
+<section class="align">
+
+    <div class="grid align__item">
+  
+      <div 
+        
+        class="register">
+  
+        <h2>Log In</h2>
+  
+        <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  
+          <div class="form__field">
+            <input type="email" placeholder="info@mailaddress.com" formControlName="email">
+          </div>
+  
+          <div class="form__field">
+            <input type="password" placeholder="••••••••••••" formControlName="password">
+          </div>
+  
+          <div class="form__field">
+            <input type="submit" value="Login ">
+          </div>
+  
+        </form>
+  
+      </div>
+  
+    </div>
+  
+  </section>
