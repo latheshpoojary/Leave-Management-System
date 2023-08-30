@@ -7,9 +7,6 @@ import { ManageUserModule } from '../app/manage-user/manage-user.module';
 import { ManageHolidaysModule } from './manage-holidays/manage-holidays.module';
 import { ManageLeaveRequestModule } from './manage-leave-request/manage-leave-request.module';
 import { ManageLeaveListModule } from './manage-leave-list/manage-leave-list.module';
-import { DashboardComponent } from './common component/dashboard/dashboard.component';
-
-
 const routes: Routes = [
   {
     path:'',
@@ -22,24 +19,33 @@ const routes: Routes = [
   },
   {
     path:'dashboard',
-    component:DashboardComponent,canActivate:[loginGuard]
+    component:SidebarComponent,canActivate:[loginGuard],
+    children:[
+      {
+        path:'user',
+        loadChildren:()=>import('../app/manage-user/manage-user.module').then(m=>ManageUserModule),
+        canActivate:[loginGuard]
+      },
+      {
+        path:'holidays',
+        loadChildren:()=>import('../app/manage-holidays/manage-holidays.module').then(m=>ManageHolidaysModule),
+        canActivate:[loginGuard]
+      },
+      {
+        path:'request',
+        loadChildren:()=>import('../app/manage-leave-request/manage-leave-request.module').then(m=>ManageLeaveRequestModule),
+        canActivate:[loginGuard]
+      },
+      {
+        path:'leaves',
+        loadChildren:()=>import('../app/manage-leave-list/manage-leave-list-routing.module').then(m=>ManageLeaveListModule),
+        canActivate:[loginGuard]
+      }
+    ]
+
+    
   },
-  {
-    path:'user',
-    loadChildren:()=>import('../app/manage-user/manage-user.module').then(m=>ManageUserModule)
-  },
-  {
-    path:'holidays',
-    loadChildren:()=>import('../app/manage-holidays/manage-holidays.module').then(m=>ManageHolidaysModule)
-  },
-  {
-    path:'request',
-    loadChildren:()=>import('../app/manage-leave-request/manage-leave-request.module').then(m=>ManageLeaveRequestModule)
-  },
-  {
-    path:'leaves',
-    loadChildren:()=>import('../app/manage-leave-list/manage-leave-list-routing.module').then(m=>ManageLeaveListModule)
-  }
+ 
 ];
 
 @NgModule({

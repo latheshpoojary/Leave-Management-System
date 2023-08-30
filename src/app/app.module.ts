@@ -13,13 +13,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { DashboardComponent } from './common component/dashboard/dashboard.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SidebarComponent,
-    DashboardComponent
+   
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,8 @@ import { DashboardComponent } from './common component/dashboard/dashboard.compo
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatFormFieldModule,
+    MatInputModule
     
   ],
   providers: [

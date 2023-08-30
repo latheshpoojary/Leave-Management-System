@@ -5,9 +5,12 @@
     box-sizing: border-box;
 }
 :root{
-    --secondary-color: #191645;
-  --third-color: #43C6AC;
+    --secondary-color: #e6eaea;
+  --third-color: #3ab19b;
   --primary-color: #ffffff;
+  font-size: min(3vw,16px);
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+

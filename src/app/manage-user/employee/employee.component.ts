@@ -1,9 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { UserService } from 'src/app/shared/services/user/user.service';
+import { Observable, map } from 'rxjs';
+import { UserDetails, UserService } from 'src/app/shared/services/user/user.service';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { Dialog } from '@angular/cdk/dialog';
 
 export interface UserData {
   id: string;
@@ -18,51 +21,20 @@ export interface UserData {
   
 })
 
-export class EmployeeComponent {
+export class EmployeeComponent implements OnInit{
   userForm!:FormGroup;
-  
+  showForm=false;
+  employeeList! :UserDetails[];
+  isLoading = false;
   /** Constants used to fill up our data base. */
-  public FRUITS: string[] = [
-    'blueberry',
-    'lychee',
-    'kiwi',
-    'mango',
-    'peach',
-    'lime',
-    'pomegranate',
-    'pineapple',
-  ];
-  public NAMES: string[] = [
-    'Maia',
-    'Asher',
-    'Olivia',
-    'Atticus',
-    'Amelia',
-    'Jack',
-    'Charlotte',
-    'Theodore',
-    'Isla',
-    'Oliver',
-    'Isabella',
-    'Jasper',
-    'Cora',
-    'Levi',
-    'Violet',
-    'Arthur',
-    'Mia',
-    'Thomas',
-    'Elizabeth',
-  ];
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource!: MatTableDataSource<UserData>;
+
+  displayedColumns: string[] = ['id', 'name', 'email', 'designation',"role","action"];
+  dataSource!: MatTableDataSource<UserDetails>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb:FormBuilder,private userService:UserService) {
-      // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => this.createNewUser(k + 1));
-
     //user form initialization
     this.userForm = this.fb.group({
       id:[''],
@@ -75,12 +47,49 @@ export class EmployeeComponent {
     })
 
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+    
   }
 
+
+
+
+  ngOnInit(): void {
+    console.log("init");   
+    this.fetchEmployee();  
+  }
+
+
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+  
+  fetchEmployee(){
+    this.isLoading= true;
+    this.userService.getEmployees().pipe(
+      map(
+        (employee: any) => {
+          const dataArray = Object.keys(employee).map(key => ({
+            id: key,
+            ...employee[key]
+          }));
+          return dataArray;
+      })
+    ).subscribe(response=>{
+      
+      console.log(this.isLoading);
+      this.isLoading = false;
+      console.log(this.isLoading);
+      this.employeeList = response;
+      this.dataSource = new MatTableDataSource(this.employeeList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort; 
+     
+      console.log(this.employeeList);
+      console.log(this.dataSource);
+      
+      
+      
+    });
   }
 
   applyFilter(event: Event) {
@@ -91,40 +100,32 @@ export class EmployeeComponent {
       this.dataSource.paginator.firstPage();
     }
   }
-  createNewUser(id: number): UserData {
-    const name =
-      this.NAMES[Math.round(Math.random() * (this.NAMES.length - 1))] +
-      ' ' +
-      this.NAMES[Math.round(Math.random() * (this.NAMES.length - 1))].charAt(0) +
-      '.';
-  
-    return {
-      id: id.toString(),
-      name: name,
-      progress: Math.round(Math.random() * 100).toString(),
-      fruit: this.FRUITS[Math.round(Math.random() * (this.FRUITS.length - 1))],
-    }; 
-  }
 
+  //send User data
   onSubmit(){
     const email=this.userForm.value.email;
     const password = this.userForm.value.password;
-    this.userService.loginAuth(email,password).subscribe(response=>{  
-      console.log(response);
-      
+    // authentication database details
+    this.userService.addEmployee(email,password).subscribe(response=>{  
+      console.log(response);     
     },error=>{
       console.log(error);  
     })
-    this.userService.loginRealtime(this.userForm.value).subscribe(response=>{
-      console.log(response);  
+    // realtime database details
+    this.userService.addEmployeeRealTime(this.userForm.value).subscribe(response=>{
+      console.log(response); 
+      this.fetchEmployee(); 
     });
+    // reset the form after submission
     this.userForm.reset();
+    this.showForm = false;
+    
     
   }
-  close(){
 
-  }
-  
+  cancel(){
+    this.userForm.reset();
+  } 
 }
 
 /** Builds and returns a new User. */

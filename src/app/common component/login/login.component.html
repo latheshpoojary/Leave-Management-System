@@ -1,31 +1,22 @@
 <section class="align">
-
-    <div class="grid align__item">
-  
-      <div 
-        
-        class="register">
-  
-        <h2>Log In</h2>
-  
-        <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  
-          <div class="form__field">
-            <input type="email" placeholder="info@mailaddress.com" formControlName="email">
-          </div>
-  
-          <div class="form__field">
-            <input type="password" placeholder="••••••••••••" formControlName="password">
-          </div>
-  
-          <div class="form__field">
-            <input type="submit" value="Login ">
-          </div>
-  
-        </form>
-  
-      </div>
-  
+    <div  class="register">
+      <h2>Log In</h2>
+      <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" formControlName="email" required>
+          <mat-error *ngIf="form['email'].invalid">Email is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <mat-error *ngIf="form['password'].invalid">Password is required</mat-error>
+          <button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <button mat-raised-button style="background-color: var(--third-color);" [disabled]="userForm.invalid">Log In</button>
+      </form> 
     </div>
+</section>
   
-  </section>

@@ -11,9 +11,12 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule, matSelectAnimations} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatDialogModule, matDialogAnimations} from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
-    EmployeeComponent
+    EmployeeComponent,
+   
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatPaginatorModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ]
 })
 export class ManageUserModule { }

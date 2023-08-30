@@ -1,113 +1,181 @@
 <div class="container model">
-    <div class="action-header">
-        <button mat-raised-button color="primary">Primary</button>
-    </div>
-    <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-    </mat-form-field>
-      
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
-      
-          <!-- ID Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-          </ng-container>
-      
-          <!-- Progress Column -->
-          <ng-container matColumnDef="progress">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-            <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-          </ng-container>
-      
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-          </ng-container>
-      
-          <!-- Fruit Column -->
-          <ng-container matColumnDef="fruit">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fruit </th>
-            <td mat-cell *matCellDef="let row"> {{row.fruit}} </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-          <!-- Row shown when there is no matching data. -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-          </tr>
-        </table>
-      
-        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-      </div>
-      <div class="form-pop-up">
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <div class="header">
-                <h1>Add Employee</h1>
-                <div class="close">
-                    <mat-icon>close</mat-icon>
-                </div>
-            </div>
-            <mat-form-field class="example-full-width">
-                <mat-label>Id</mat-label>
-                <input 
-                    type="text" matInput
-                    placeholder="Ex. Pw123"
-                    formControlName="id">
-               
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Name</mat-label>
-                <input 
-                    type="text" matInput
-                    placeholder="Ex. Tom"
-                    formControlName="name">
-               
-            </mat-form-field>
-           
-            <mat-form-field class="example-full-width">
-                <mat-label>Designation</mat-label>
-                <input 
-                    type="text" matInput
-                    placeholder="Ex.Software Engineer"
-                    formControlName="designation">
-               
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Role</mat-label>
-                <mat-select formControlName="role">
-                    <mat-option value="client">Client</mat-option>
-                    <mat-option value="Employee">Employee</mat-option>
-                  </mat-select>
-               
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Email</mat-label>
-                <input 
-                    type="email" matInput
-                    placeholder="Ex. pat@example.com"
-                    formControlName="email">
-               
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Password</mat-label>
-                <input 
-                    type="password" matInput
-                    placeholder="Ex. xyz@123#"
-                    formControlName="password">
-               
-            </mat-form-field>
-            <div class="button-field">
-                <button mat-raised-button color="default" (click)="close()">Cancel</button>
-                <button mat-raised-button color="primary">Add</button>
-            </div>
-        </form>
-    </div>
-    
-</div>
+  <div class="action-header">
+    <button
+      mat-raised-button
+      style="background-color: var(--third-color)"
+      (click)="showForm = true;"
+    >
+      Add User
+    </button>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. Mia"
+      #input
+    />
+  </mat-form-field>
 
+  <!-- spinner container -->
+
+  <div class="lds-roller" *ngIf="isLoading">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <span>Loading Please wait.......</span>
+  </div>
+
+  <div class="mat-elevation-z8" *ngIf="!isLoading">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.id | uppercase }}</td>
+      </ng-container>
+
+      <!-- Progress Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress</th>
+        <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.name | titlecase }}</td>
+      </ng-container>
+
+      <!-- Designation Column -->
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.designation | titlecase }}
+        </td>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let row">{{ row.role | titlecase }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+          <td mat-cell *matCellDef="let row" class="action">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="showForm = true;">Edit
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="showForm = true;">Delete
+            </button>
+             
+
+          </td>
+        
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No data matching the filter "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+  </div>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+
+  <!-- Model -->
+  
+  <div class="form-pop-up" [class.show]="showForm">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="header">
+        <h1>Add Employee</h1>
+        <div class="close" (click)="showForm = false">
+          <mat-icon>close</mat-icon>
+        </div>
+      </div>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Id</mat-label>
+        <input
+          appearance="outline"
+          type="text"
+          matInput
+          placeholder="Ex. Pw123"
+          formControlName="id"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          appearance="outline"
+          type="text"
+          matInput
+          placeholder="Ex. Tom"
+          formControlName="name"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Designation</mat-label>
+        <input
+          appearance="outline"
+          type="text"
+          matInput
+          placeholder="Ex.Software Engineer"
+          formControlName="designation"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="client">Client</mat-option>
+          <mat-option value="Employee">Employee</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Ex. pat@example.com"
+          formControlName="email"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Ex. xyz@123#"
+          formControlName="password"
+        />
+      </mat-form-field>
+      <div class="button-field">
+        <button mat-raised-button color="default" (click)="cancel()">
+          Cancel
+        </button>
+        <button mat-raised-button style="background-color: var(--third-color)">
+          Add
+        </button>
+      </div>
+    </form>
+
+    
+  </div>
+</div>
