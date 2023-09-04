@@ -1,0 +1,22 @@
+.mdc-dialog__title{
+    padding: 1rem !important;
+  }
+  form{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    padding: 1rem;
+    @media screen and (width<600px){
+      grid-template-columns: 1fr;
+    }
+    .mat-mdc-form-field{
+      min-width: min(250px,100%);
+      display: block;
+    }
+    .mdc-dialog__actions{
+      width: 100%;
+      padding: 0;
+      float: right;
+    }
+  }

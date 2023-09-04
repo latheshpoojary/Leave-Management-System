@@ -1,0 +1,62 @@
+<div class="form-pop-up">
+    <div class="header">
+        <h1 mat-dialog-title>Request Leave</h1>
+    </div>
+    <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>From</mat-label>
+                <input matInput [matDatepicker]="datepicker1" formControlName="from">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker1>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>To</mat-label>
+                <input matInput [matDatepicker]="datepicker2" formControlName="to">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker2>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="Casual Leave">Casual Leave</mat-option>
+              <mat-option value="Sick Leave">Sick Leave</mat-option>
+              <mat-option value="Paternity Leave">Paternity Leave</mat-option>
+              <mat-option value="Loss of Pay">Loss of Pay</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Reason</mat-label>
+            <input matInput formControlName="reason">
+        </mat-form-field>
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button color="default"
+            [mat-dialog-close]="false">
+              Cancel
+            </button>
+            <button 
+                [disabled]="leaveForm.invalid"
+                mat-raised-button 
+                
+                type="submit"
+                style="background-color: var(--third-color)">
+             {{isEditMode?'Update':'Add'}}
+            </button>
+        </div>
+    </form>
+
+    
+  </div>
+
+

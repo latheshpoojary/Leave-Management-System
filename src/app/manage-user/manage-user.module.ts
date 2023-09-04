@@ -9,13 +9,17 @@ import { MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule, matSelectAnimations} from '@angular/material/select';
+import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule, matDialogAnimations} from '@angular/material/dialog';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 @NgModule({
   declarations: [
     EmployeeComponent,
+    DeleteDialogComponent,
+    UserFormComponent,
    
   ],
   imports: [
@@ -31,7 +35,8 @@ import {MatDialogModule, matDialogAnimations} from '@angular/material/dialog';
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    
   ]
 })
 export class ManageUserModule { }

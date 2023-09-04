@@ -1,0 +1,50 @@
+{
+    "holidays": [   {
+      "date": "2020-01-01",
+      "event": "New Year's Day",
+      "description": "Start of the Gregorian year"
+    },
+    {
+      "date": "2020-01-20",
+      "event": "Martin Luther King Jr. Day",
+      "description": "Honoring civil rights leader Martin Luther King Jr."
+    },
+    {
+      "date": "2020-02-14",
+      "event": "Valentine's Day",
+      "description": "Celebration of love and affection"
+    },
+    {
+      "date": "2020-04-10",
+      "event": "Good Friday",
+      "description": "Christian holiday commemorating the crucifixion of Jesus"
+    },
+    {
+      "date": "2020-05-25",
+      "event": "Memorial Day",
+      "description": "Remembering and honoring those who died while serving in the U.S. military"
+    },
+    {
+      "date": "2020-07-04",
+      "event": "Independence Day",
+      "description": "Celebration of independence"
+    },
+    {
+      "date": "2020-10-31",
+      "event": "Halloween",
+      "description": "Celebration of spooky and festive activities"
+    },
+    {
+      "date": "2020-11-26",
+      "event": "Thanksgiving Day",
+      "description": "Giving thanks for the harvest and blessings of the past year"
+    },
+    {
+      "date": "2020-12-25",
+      "event": "Christmas Day",
+      "description": "Celebration of the birth of Jesus Christ"
+    }
+   
+  ]
+}
+  

@@ -36,11 +36,12 @@ export class LoginComponent {
     const password = this.userForm.value.password;
 
     //call login service
-    this.loginService.login(email,password).subscribe(response=>{
+    this.loginService.login(email,password).subscribe((response)=>{
+      
       console.log("Response from FireBase",response); 
       this.route.navigate(['dashboard']);
     },
-    error=>{
+    (error:any)=>{
       this._snackBar.open(error,"Close");  
     }) 
   }

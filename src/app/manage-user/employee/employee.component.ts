@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component,ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, map } from 'rxjs';
 import { UserDetails, UserService } from 'src/app/shared/services/user/user.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { Dialog } from '@angular/cdk/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { UserFormComponent } from '../user-form/user-form.component';
 
 export interface UserData {
   id: string;
@@ -18,114 +17,101 @@ export interface UserData {
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
-  
+
 })
 
-export class EmployeeComponent implements OnInit{
-  userForm!:FormGroup;
-  showForm=false;
-  employeeList! :UserDetails[];
+export class EmployeeComponent {
+  showForm = false;
+  employeeList!: UserDetails[];
   isLoading = false;
+  isEditMode = false;
+  editKey!: string;
+  deleteKey !:string;
   /** Constants used to fill up our data base. */
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'designation',"role","action"];
-  dataSource!: MatTableDataSource<UserDetails>;
+  displayedColumns: string[] = ['id', 'name', 'email', 'designation', "role", "action"];
+  dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  dataInitialized!: boolean;
 
-  constructor(private fb:FormBuilder,private userService:UserService) {
-    //user form initialization
-    this.userForm = this.fb.group({
-      id:[''],
-      name:[''],
-      designation:[''],
-      role:[''],
-      email:[''],
-      password:['']
-
-    })
-
-    // Assign the data to the data source for the table to render
-    
+  constructor( private userService: UserService, private dialog: MatDialog) {
   }
 
-
-
-
-  ngOnInit(): void {
-    console.log("init");   
-    this.fetchEmployee();  
-  }
-
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-  
-  fetchEmployee(){
-    this.isLoading= true;
-    this.userService.getEmployees().pipe(
-      map(
-        (employee: any) => {
-          const dataArray = Object.keys(employee).map(key => ({
-            id: key,
-            ...employee[key]
-          }));
-          return dataArray;
-      })
-    ).subscribe(response=>{
-      
-      console.log(this.isLoading);
-      this.isLoading = false;
-      console.log(this.isLoading);
-      this.employeeList = response;
-      this.dataSource = new MatTableDataSource(this.employeeList);
+  ngOnInit() {
+    this.userService.getAllEmployees().subscribe(response => {
+      const employeeList = response;
+      this.dataSource = new MatTableDataSource(employeeList);
       this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort; 
-     
-      console.log(this.employeeList);
+      this.dataSource.sort = this.sort;
       console.log(this.dataSource);
-      
-      
-      
+      console.log(this.dataSource);
+    });
+    this.isLoading = false;
+  }
+
+  fetchEmployee() {
+    this.isLoading = true;
+    this.userService.getAllEmployees().subscribe(response => {
+      this.isLoading = false;
+      const employeeList = response;
+      this.dataSource = new MatTableDataSource(employeeList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      console.log(this.dataSource);
+      console.log(this.dataSource);
     });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  //send User data
-  onSubmit(){
-    const email=this.userForm.value.email;
-    const password = this.userForm.value.password;
-    // authentication database details
-    this.userService.addEmployee(email,password).subscribe(response=>{  
-      console.log(response);     
-    },error=>{
-      console.log(error);  
-    })
-    // realtime database details
-    this.userService.addEmployeeRealTime(this.userForm.value).subscribe(response=>{
-      console.log(response); 
-      this.fetchEmployee(); 
-    });
-    // reset the form after submission
-    this.userForm.reset();
-    this.showForm = false;
-    
-    
+  // reset the form after submission
+  onAdd(){
+    this.openDialogue(UserFormComponent);
   }
 
-  cancel(){
-    this.userForm.reset();
-  } 
+  onEdit(key: any) {
+    console.log("Edit Key",key);
+    
+   this.editKey = key;
+   this.openDialogue(UserFormComponent,this.editKey);
+  }
+
+  onDelete(key: string) {
+    this.deleteKey = key;
+   this.openDialogue(DeleteDialogComponent,this.deleteKey);
+  }
+
+  openDialogue(component:any,key?:string){
+    const popRef=this.dialog.open(component,{
+     width:"min(80%,800px)",
+     data:{
+      key:key
+     }
+     
+    })
+    popRef.afterClosed().subscribe(response=>{ 
+      if(response){
+        this.userService.deleteEmployee(this.deleteKey).subscribe(response => {
+          this.fetchEmployee();
+        })
+      }
+      else{
+        this.fetchEmployee();
+      }
+         
+        
+ 
+    })
+  }
+
 }
 
 /** Builds and returns a new User. */

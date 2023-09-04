@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "leave-management-system-b6f99": {
+      "hosting": {
+        "leaveManagementSystem": [
+          "leave-management-system-b6f99"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "leave-management-system-b6f99"
+  }
+}

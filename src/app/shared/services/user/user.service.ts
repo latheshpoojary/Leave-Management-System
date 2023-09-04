@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, switchMap, throwError } from 'rxjs';
 
 interface User {
   kind: string,
@@ -17,7 +17,7 @@ export interface UserDetails{
   designation:string,
   role:string,
   email:string,
-
+  key:string,
 }
 
 @Injectable({
@@ -26,27 +26,60 @@ export interface UserDetails{
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  addEmployee(email: string, password: string) {
+  addEmployee(email: string, password: string,formValue:any) {
     return this.http.post<User>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDnEP3tGFunKNJ9UUtzZVpcu07cAbdHO4o', {
       email: email,
       password: password,
       returnSecureToken: true
     }).pipe(
+      switchMap((response)=>{
+       return this.addEmployeeRealTime(formValue,response.localId);
+        
+      }),
       catchError(this.errorHandler) 
     )
   }
 
-  addEmployeeRealTime(user:any){
+  addEmployeeRealTime(user:any,id:string){
     console.log(user);
     
-    return this.http.post<UserDetails[]>('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user.json',user);
+    return this.http.put<UserDetails[]>('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+id+'.json',{
+      id:user.id,
+      name:user.name,
+      designation:user.designation,
+      role:user.role,
+      email:user.email,
+      password:user.password
+    });
   }
 
 
-  getEmployees(){
-    return this.http.get<UserDetails[]>('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user.json');
+  getAllEmployees():Observable<any>{
+    return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user.json').pipe(
+      map(
+        (employee: any) => {
+          const dataArray = Object.keys(employee).map(key => ({
+           key:key,
+           ...employee[key]
+          }));
+          return dataArray;
+      })
+    );
   }
 
+  editEmployee(key:string,value:any){
+    return this.http.put('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+key+'.json',value);
+  }
+
+  deleteEmployee(key:string){
+    return this.http.patch('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+key+'.json',{
+      isDeleted:true
+    });
+  }
+
+  getEmployeeByKey(key:any){
+    return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+key+'.json');
+  }
 
   errorHandler(errorRes: HttpErrorResponse){
     console.log(errorRes,"From ErrorHandler");

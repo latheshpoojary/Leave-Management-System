@@ -1,0 +1,78 @@
+<div class="form-pop-up">
+    <div class="header">
+        <h1 mat-dialog-title>Add Employee</h1>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Id</mat-label>
+            <input
+              appearance="outline"
+              type="text"
+              matInput
+              placeholder="Ex. Pw123"
+              formControlName="id"
+            />
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input
+              appearance="outline"
+              type="text"
+              matInput
+              placeholder="Ex. Tom"
+              formControlName="name"
+            />
+        </mat-form-field>
+    
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Designation</mat-label>
+            <input
+              appearance="outline"
+              type="text"
+              matInput
+              placeholder="Ex.Software Engineer"
+              formControlName="designation"
+            />
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              <mat-option value="client">Client</mat-option>
+              <mat-option value="Employee">Employee</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              matInput
+              placeholder="Ex. pat@example.com"
+              formControlName="email"
+            />
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              type="password"
+              matInput
+              placeholder="Ex. xyz@123#"
+              formControlName="password"
+            />
+        </mat-form-field>
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button color="default"
+            [mat-dialog-close]="false">
+              Cancel
+            </button>
+            <button 
+                [disabled]="userForm.invalid"
+                mat-raised-button 
+                
+                style="background-color: var(--third-color)">
+              {{data.key?'Update':'Add'}}
+            </button>
+        </div>
+    </form>
+
+    
+  </div>

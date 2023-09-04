@@ -6,29 +6,16 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item *ngIf="isAdmin" routerLink="user" routerLinkActive="active">
-        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="group"></mat-icon> -->
         <span>Employee</span>
       </a>
-      <a mat-list-item *ngIf="isAdmin"  routerLink="holidays">
-        <!-- <span>
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="calendar_month"></mat-icon>
-        </span> -->
-        <span>Holidays</span>
-        
+      <a mat-list-item *ngIf="isAdmin"  routerLink="holidays" routerLinkActive="active">
+        <span>Holidays</span> 
       </a>
-      <a mat-list-item *ngIf="isAdmin"  routerLink="request">
-        <!-- <span>
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="free_cancellation"></mat-icon>
-        </span> -->
-        <span>Leave Request</span>
-        
+      <a mat-list-item *ngIf="isAdmin"  routerLink="request" routerLinkActive="active">
+        <span>Leave Request</span> 
       </a>
-      <a mat-list-item  routerLink="/leaves">
-        <!-- <span>
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="list_alt"></mat-icon>
-        </span> -->
+      <a mat-list-item *ngIf="!isAdmin" routerLink="leaves" routerLinkActive="active">
         <span>Leave List</span>
-        
       </a>
     </mat-nav-list>
   </mat-sidenav>
