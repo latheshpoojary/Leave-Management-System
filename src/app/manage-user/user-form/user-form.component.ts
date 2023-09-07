@@ -1,18 +1,19 @@
 import { DialogRef } from '@angular/cdk/dialog';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit ,OnDestroy} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { EmployeeComponent } from '../employee/employee.component';
+import { UserComponent } from '../user/user.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRouteSnapshot,CanDeactivateFn,Router,RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit,OnDestroy {
   userForm!: FormGroup;
-
+  hide=true;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private userService: UserService,  private ref: DialogRef<UserFormComponent>) {
     this.userForm = this.fb.group({
       id: ['', Validators.required],
@@ -23,6 +24,8 @@ export class UserFormComponent implements OnInit {
       password: ['', Validators.required]
     })
   }
+
+ 
 
   ngOnInit(): void {
     if (this.data.key) { //getting edit key
@@ -76,6 +79,16 @@ export class UserFormComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    // this.router.isActive()
+    if(this.userForm.invalid){
+      if(confirm('You have unsaved changes. Do you really want to leave?')){
+
+      }
+    }
+    
+  }
+  
 }
 
 

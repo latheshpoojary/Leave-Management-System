@@ -13,6 +13,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class ManageLeaveRequestModule { }

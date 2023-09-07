@@ -6,6 +6,7 @@
         <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>From</mat-label>
                 <input matInput [matDatepicker]="datepicker1" formControlName="from">
+                <mat-error *ngIf="leaveForm.get('from')?.hasError('beforeToday')">Date must be greaterThan today</mat-error>
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="datepicker1"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker1>
@@ -17,22 +18,25 @@
             </mat-form-field>
         <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>To</mat-label>
-                <input matInput [matDatepicker]="datepicker2" formControlName="to">
+                <input matInput [matDatepicker]="datepicker2" formControlName="to" >
+                <mat-error *ngIf="leaveForm.get('to')?.hasError('beforeToday')">Date must be greaterThan today</mat-error>
+                <mat-error *ngIf="leaveForm.get('to')?.hasError('greaterThan')">To is lessThan From</mat-error>
                 <mat-hint>MM/DD/YYYY</mat-hint>
+                <!-- <mat-error >To must be greater than From</mat-error> -->
                 <mat-datepicker-toggle matIconSuffix [for]="datepicker2"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker2>
                   <mat-datepicker-actions>
                     <button mat-button matDatepickerCancel>Cancel</button>
-                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                    <button mat-raised-button color="primary" matDatepickerApply (click)="onSelect()">Apply</button>
                   </mat-datepicker-actions>
                 </mat-datepicker>
             </mat-form-field>
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Type</mat-label>
             <mat-select formControlName="type">
-              <mat-option value="Casual Leave">Casual Leave</mat-option>
-              <mat-option value="Sick Leave">Sick Leave</mat-option>
-              <mat-option value="Paternity Leave">Paternity Leave</mat-option>
+              <mat-option value="Casual Leave" [disabled]="(leaveService.remaining_casual_leaves | async)==0">Casual Leave</mat-option>
+              <mat-option value="Sick Leave" [disabled]="(leaveService.remaining_sick_leaves | async)==0">Sick Leave</mat-option>
+              <mat-option value="Paternity Leave" [disabled]="(leaveService.remaining_paternity_leaves | async)==0">Paternity Leave</mat-option>
               <mat-option value="Loss of Pay">Loss of Pay</mat-option>
             </mat-select>
         </mat-form-field>

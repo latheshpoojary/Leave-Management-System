@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EmployeeComponent } from './employee/employee.component';
+import { UserComponent } from './user/user.component';
 import { employeeResolver } from '../shared/resolver/employee.resolver';
+import { formGuard } from '../shared/guards/deactivate/form.guard';
+import { UserFormComponent } from './user-form/user-form.component';
 const routes: Routes = [
   {
     path:'',
-    component:EmployeeComponent,resolve:{employee:employeeResolver}
+    component:UserComponent,
+    
   }
 ];
 

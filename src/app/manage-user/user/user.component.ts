@@ -1,4 +1,4 @@
-import { Component,ViewChild } from '@angular/core';
+import { AfterViewInit, Component,ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,6 +6,7 @@ import { UserDetails, UserService } from 'src/app/shared/services/user/user.serv
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { UserFormComponent } from '../user-form/user-form.component';
+import { CanDeactivateFn } from '@angular/router';
 
 export interface UserData {
   id: string;
@@ -14,13 +15,13 @@ export interface UserData {
   fruit: string;
 }
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss'],
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss'],
 
 })
 
-export class EmployeeComponent {
+export class UserComponent implements AfterViewInit{
   showForm = false;
   employeeList!: UserDetails[];
   isLoading = false;
@@ -40,26 +41,39 @@ export class EmployeeComponent {
   }
 
   ngOnInit() {
+
     this.userService.getAllEmployees().subscribe(response => {
       const employeeList = response;
+      console.log(employeeList);
+      
       this.dataSource = new MatTableDataSource(employeeList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       console.log(this.dataSource);
       console.log(this.dataSource);
     });
-    this.isLoading = false;
+    // this.isLoading = false;
+  }
+
+  ngAfterViewInit(): void {
+    try {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } catch (error) {
+      
+    }
+    
   }
 
   fetchEmployee() {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.userService.getAllEmployees().subscribe(response => {
-      this.isLoading = false;
+      // this.isLoading = false;
       const employeeList = response;
       this.dataSource = new MatTableDataSource(employeeList);
-      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator =this.paginator ;
       this.dataSource.sort = this.sort;
-      console.log(this.dataSource);
+      
       console.log(this.dataSource);
     });
   }
@@ -89,11 +103,12 @@ export class EmployeeComponent {
    this.openDialogue(DeleteDialogComponent,this.deleteKey);
   }
 
-  openDialogue(component:any,key?:string){
+  openDialogue(component:any,key?:string,){
     const popRef=this.dialog.open(component,{
      width:"min(80%,800px)",
      data:{
-      key:key
+      key:key,
+      
      }
      
     })

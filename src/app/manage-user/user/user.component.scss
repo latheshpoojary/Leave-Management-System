@@ -30,6 +30,10 @@
         display: inline-block;
       }
     }
+    .mat-row{
+      text-align: center;
+      height: 10vh;
+    }
   }
   mat-paginator{
     border: 1px solid grey;

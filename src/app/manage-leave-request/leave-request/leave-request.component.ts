@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,AfterViewInit } from '@angular/core';
 import { RequestService } from 'src/app/shared/services/leave-request/request.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -25,6 +25,15 @@ input: any;
      console.log(this.leaveRequest);
     })
   }
+
+  // ngAfterViewInit(){
+  //   try {
+  //     this.dataSource.paginator = this.paginator;
+  //     this.dataSource.sort = this.sort;
+  //   } catch (error) {
+      
+  //   }
+  // }
 
   loadLeaveRequest(){
     this.requestService.getAllLeaves().subscribe((response:any)=>{

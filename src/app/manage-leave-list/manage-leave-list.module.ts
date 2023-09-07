@@ -14,6 +14,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { LeaveFormComponent } from './leave-form/leave-form.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   declarations: [
     LeavesListComponent,
@@ -31,7 +33,9 @@ import { LeaveFormComponent } from './leave-form/leave-form.component';
     MatSelectModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class ManageLeaveListModule { }

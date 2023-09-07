@@ -14,7 +14,8 @@ import { DeleteDialogComponent } from 'src/app/manage-user/delete-dialog/delete-
   styleUrls: ['./leaves-list.component.scss']
 })
 export class LeavesListComponent {
-  public leaves:any[]=[];
+  public leaves:any[] =[];
+ 
   displayedColumns: string[] = ['from', 'to', 'reason', 'type', "status", "action"];
   dataSource!: MatTableDataSource<any>;
   public userKey!:string | null ;
@@ -22,27 +23,33 @@ export class LeavesListComponent {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(private leaveService:LeaveService,private dialogue:MatDialog){
   this.userKey = localStorage.getItem("user");
-   this.leaveService.fetchLeave(this.userKey).subscribe(response=>{
-    if(response){
+   this.leaveService.fetchLeave(this.userKey).subscribe((response:any)=>{
       this.leaves = response;
+      if(response){
+        const lastResponse=response[response.length-1];
+        this.leaveService.remaining_casual_leaves.next(lastResponse.casual_leave);
+        this.leaveService.remaining_sick_leaves.next( lastResponse.sick_leave);
+        this.leaveService.remaining_paternity_leaves.next(lastResponse.paternity_leave);
+      }
+      
+
       this.dataSource = new MatTableDataSource(this.leaves);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       console.log(this.leaves);
-    } 
    })
    
   }
 
   loadLeaves(){
-    this.leaveService.fetchLeave(this.userKey).subscribe(response=>{
-      if(response){
+    this.leaveService.fetchLeave(this.userKey).subscribe((response:any)=>{
+      
         this.leaves = response;
         this.dataSource = new MatTableDataSource(this.leaves);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         console.log(this.leaves);
-      } 
+      
      })
   }
   onAdd(){
@@ -60,7 +67,10 @@ export class LeavesListComponent {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    const filterData = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   openPopUp(component:any,key?:string,userKey?:string | null) {

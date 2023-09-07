@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HolidayService } from 'src/app/shared/services/holidays/holiday.service';
+import { DateValidator } from 'src/app/shared/validator/toDate.validator';
 
 @Component({
   selector: 'app-holiday-form',
@@ -16,7 +17,7 @@ export class HolidayFormComponent implements OnInit{
     this.holidayForm = this.fb.group({
       event:['',Validators.required],
       description:['',Validators.required],
-      date:['',Validators.required],
+      date:['',[Validators.required,DateValidator.isDateBeforeToday]],
       type:['',Validators.required]
     })
   }

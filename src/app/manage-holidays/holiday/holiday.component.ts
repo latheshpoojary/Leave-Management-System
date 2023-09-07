@@ -20,6 +20,9 @@ export class HolidayComponent implements OnInit{
   ngOnInit(): void {
     this.holidayService.getAllHolidays().subscribe(response=>{
       this.holidays = response;   
+      this.dataSource = new MatTableDataSource(this.holidays);
+      console.log(this.dataSource);
+      
       console.log(this.holidays);
     })
   }
@@ -41,7 +44,10 @@ export class HolidayComponent implements OnInit{
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    const filterData = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   onAdd(){

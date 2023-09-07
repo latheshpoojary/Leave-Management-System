@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, mergeMap, of, switchMap, tap, throwError } from 'rxjs';
 
 interface User {
   kind: string,
@@ -25,50 +25,104 @@ export class LoginService {
   }
 
 
+  // login(email: string, password: string) {
+  //   console.log("Login initiated");
+    
+  //   return this.http.post<User>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDnEP3tGFunKNJ9UUtzZVpcu07cAbdHO4o', {
+  //     email: email,
+  //     password: password,
+  //     returnSecureToken: true
+  //   }).pipe(
+  //     tap(response => {
+
+        
+  //       if (response.email === 'admin@pacewisdom.com') {
+  //         this.isAdmin = true;
+  //         localStorage.setItem("admin", "this.isAdmin");
+  //       }
+  //       else {
+  //          this.getUser(response.localId).subscribe(response=>{
+
+  //          },
+  //           err=>{
+  //             console.log("here");
+              
+  //             throw Error(err.message)
+ 
+  //           })
+  //          }
+  //         }
+  //       )
+  //   ) }
+
+  // getUser(localId: string) {
+  //   return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/' + localId + '.json')
+  //     .pipe(
+  //       tap((response:any)=>{
+  //         if(!response.isDeleted){
+  //           localStorage.setItem("userId",response.id);
+  //         }
+  //         throwError(()=>{
+  //           "User not Found"
+  //         })
+  //       }),
+  //        // Convert response to a boolean
+  //     );
+
+  // }
+
   login(email: string, password: string) {
     console.log("Login initiated");
-    
+  
     return this.http.post<User>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDnEP3tGFunKNJ9UUtzZVpcu07cAbdHO4o', {
       email: email,
       password: password,
       returnSecureToken: true
     }).pipe(
-      catchError(this.errorHandler),
-      tap(response => {
-        console.log("Response Tapped");
-        
-        if (response.email === 'admin@pacewisdom.com') {
+      mergeMap(authResponse => {
+        if (authResponse.email === 'admin@pacewisdom.com') {
           this.isAdmin = true;
           localStorage.setItem("admin", "this.isAdmin");
-        }
-        else {
-           this.getUser(response.localId).subscribe(returnValue => {
-            if (returnValue) {
-              this.isAuthenticated = response.localId;
-              localStorage.setItem("user", this.isAuthenticated)
+          return of(authResponse); // Continue with the admin user
+        } else {
+          return this.getUser(authResponse.localId).pipe(
+            catchError(err => {
+              return throwError({
+                error:{
+                  error:{
+                    message:"USER_NOT_FOUND"
+                  }
+                }
+              });
+            }),
+            map((response) => {
+              console.log("response",response);
+              localStorage.setItem("user", authResponse.localId);
+              return response
             }
-          }
-          )
+            ) // Continue with the regular user
+          );
         }
-      }
-      ),
+      }),
+      catchError(this.errorHandler)
 
-    )
-
+    );
   }
-
+  
   getUser(localId: string) {
-    return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/' + localId + '.json')
-      .pipe(
-        tap((response:any)=>{
-          localStorage.setItem("userId",response.id);
+    return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/' + localId + '.json').pipe(
+      tap((response: any) => {
+        if (response.isDeleted) {
           
-        }),
-        map((response) => !!response), // Convert response to a boolean
-        catchError(() => of(false)) // Handle errors and return false
-      );
-
+          throw new Error("User is deleted");
+        } else {
+          localStorage.setItem("userId",response.id);
+          return true;
+        }
+      })
+    );
   }
+  
 
   errorHandler(errorRes: HttpErrorResponse) {
     console.log(errorRes, "From ErrorHandler");
@@ -91,7 +145,7 @@ export class LoginService {
         errorMessage = "Admin Restrict this Account";
         break;
       case 'USER_NOT_FOUND':
-        errorMessage = "User Not Found";
+        errorMessage = "User Account Deleted";
         break;
       default:
         errorMessage = "Unknown Error"; // Set a default message for unmatched cases

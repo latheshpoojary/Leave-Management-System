@@ -42,14 +42,14 @@ export class UserService {
 
   addEmployeeRealTime(user:any,id:string){
     console.log(user);
-    
     return this.http.put<UserDetails[]>('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+id+'.json',{
       id:user.id,
       name:user.name,
       designation:user.designation,
       role:user.role,
       email:user.email,
-      password:user.password
+      password:user.password,
+      isDeleted:false
     });
   }
 
@@ -58,11 +58,19 @@ export class UserService {
     return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user.json').pipe(
       map(
         (employee: any) => {
-          const dataArray = Object.keys(employee).map(key => ({
-           key:key,
-           ...employee[key]
-          }));
-          return dataArray;
+          const dataArray = Object.keys(employee).map((key) =>{
+            if(!employee[key].isDeleted){
+              return {
+                 key:key,
+                 ...employee[key]
+                }
+             }
+            else{
+              return null;
+            }
+          }        
+        );
+          return dataArray.filter((item)=>item!==null);
       })
     );
   }
