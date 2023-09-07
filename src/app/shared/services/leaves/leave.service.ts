@@ -47,9 +47,9 @@ export class LeaveService {
         // Calculate the difference in milliseconds
 
         // Convert milliseconds to days
-        const daysDifference = Math.floor(timeDifferenceMs / (24 * 60 * 60 * 1000));
+        // const daysDifference = Math.floor(timeDifferenceMs / (24 * 60 * 60 * 1000));
 
-        console.log(`Number of days between the two dates: ${daysDifference}`);
+        // console.log(`Number of days between the two dates: ${daysDifference}`);
 
 
         this.remaining_paternity_leaves.next(currentValue - 1);

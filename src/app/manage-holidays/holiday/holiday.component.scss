@@ -4,10 +4,21 @@ section{
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  button{
-    width:fit-content;
-    display: flex;
+  .add-icons{
+    button{
+      width:fit-content;
+      display: flex;
+      align-items: center;    
+      p{
+        width: 100%;
+        margin: 0;       
+      }
+      mat-icon{
+        width: fit-content;
+      }   
+    }
   }
+  
   mat-form-field{
     width: 100%;
   }
@@ -189,5 +200,33 @@ span{
     transform: rotate(360deg);
   }
 }
+}
+
+@media (max-width: 768px) {
+  .add-icons{
+    // border: 1px solid red;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    button{
+      width: 65px !important ;
+      height:65px !important;
+      display:flex;
+      justify-content: center;
+      border-radius: 50%;
+      align-items: center;
+      p{
+        display: none;
+      }
+      mat-icon{
+        font-size: 2rem;
+        overflow: unset;
+        margin: 0;
+        height: unset;
+        line-height: unset;
+      }
+    }
+  }
 }
 

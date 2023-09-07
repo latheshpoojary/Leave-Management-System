@@ -29,19 +29,16 @@ export class HolidayComponent implements OnInit{
 
   loadHoliday(){
     console.log("Load Holidays");
-    this.isLoading=true;
-    this.holidayService.getAllHolidays().subscribe(response=>{
-      
+    this.holidayService.getAllHolidays().subscribe(response=>{ 
       console.log(response,"response data");
-      
       this.holidays=response;
-      this.isLoading=false;
-      console.log(this.holidays,"Holiday Data");
-      
+      console.log(this.holidays,"Holiday Data"); 
       this.dataSource = new MatTableDataSource(this.holidays);   
       console.log(this.holidays);
     })
   }
+
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -59,15 +56,16 @@ export class HolidayComponent implements OnInit{
     this.openPopUp(HolidayFormComponent,this.editKey);
   }
 
-  onDelete(key:string){
+  onDelete(key:string,title:string){
     this.deleteKey = key;
-    this.openPopUp(DeleteDialogComponent);
+    this.openPopUp(DeleteDialogComponent,title);
   }
   
-  openPopUp(component:any,key?:string) {
+  openPopUp(component:any,key?:string,title?:string) {
     const addPopUpRef=this.dialogue.open(component,{
       data:{
-        key:key
+        key:key,
+        title:title
       }
     });
     addPopUpRef.afterClosed().subscribe(response=>{
@@ -77,10 +75,9 @@ export class HolidayComponent implements OnInit{
         this.holidayService.deleteHoliday(this.deleteKey).subscribe(response=>{
           console.log(response,"Delete Response");
           this.loadHoliday();
-          
         })
       }else{
-        this.loadHoliday();
+        // this.loadHoliday();
       }
       
       

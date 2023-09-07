@@ -1,5 +1,10 @@
 <section >
-    <button mat-raised-button color="primary" (click)="onAdd()">Add Holiday<mat-icon>add</mat-icon></button>
+    <div class="add-icons">
+        <button mat-raised-button color="primary" (click)="onAdd()">
+            <p>Add Holiday</p>
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
 <mat-form-field appearance="outline">
     <mat-label>Filter</mat-label>
     <input
@@ -42,7 +47,7 @@
                 </div>    
             </div>
             <div class="right">
-                <div class="action">
+                <!-- <div class="action">
                     <button 
                         mat-mini-fab 
                         style="background-color: var(--third-color);" 
@@ -57,7 +62,20 @@
                         (click)="onDelete(holiday.key)">
                         <mat-icon>delete</mat-icon>
                     </button>
-                </div>
+                </div> -->
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="onEdit(holiday.key)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item  (click)="onDelete(holiday.key,holiday.event)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
             </div>
             
         </div>
