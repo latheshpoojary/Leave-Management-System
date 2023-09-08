@@ -39,8 +39,9 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content >
-    <mat-toolbar style="background-color: var(--secondary-color);">
+    <mat-toolbar style="background-color: var(--third-color);">
       <button
+        style="color:var(--button-color);"
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
@@ -48,14 +49,17 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span style="color: var(--third-color);">Leave Management System</span>
+      <span style="color: var(--button-color);">Leave Management System</span>
       <mat-icon 
+        style="color: var(--button-color);"
         aria-hidden="false" 
         aria-label="Example home icon" 
         fontIcon="logout" 
         title="logout"
         class="lg-logout"
         (click)="logout()"></mat-icon>
+       
+     
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

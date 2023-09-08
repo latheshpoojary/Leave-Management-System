@@ -15,13 +15,15 @@ import { DeleteDialogComponent } from 'src/app/manage-user/delete-dialog/delete-
 })
 export class LeavesListComponent {
   public leaves:any[] =[];
- 
+  remaining_casual_leave!:any;
+  remaining_sick_leave!:any;
+  remaining_paternity_leave!:any;
   displayedColumns: string[] = ['from', 'to', 'reason', 'type', "status", "action"];
   dataSource!: MatTableDataSource<any>;
   public userKey!:string | null ;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private leaveService:LeaveService,private dialogue:MatDialog){
+  constructor(public leaveService:LeaveService,private dialogue:MatDialog){
   this.userKey = localStorage.getItem("user");
    this.leaveService.fetchLeave(this.userKey).subscribe((response:any)=>{
       this.leaves = response;
@@ -43,8 +45,13 @@ export class LeavesListComponent {
 
   loadLeaves(){
     this.leaveService.fetchLeave(this.userKey).subscribe((response:any)=>{
-      
-        this.leaves = response;
+      this.leaves = response;
+      if(response){
+        const lastResponse=response[response.length-1];
+        this.leaveService.remaining_casual_leaves.next(lastResponse.casual_leave);
+        this.leaveService.remaining_sick_leaves.next( lastResponse.sick_leave);
+        this.leaveService.remaining_paternity_leaves.next(lastResponse.paternity_leave);
+      }
         this.dataSource = new MatTableDataSource(this.leaves);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

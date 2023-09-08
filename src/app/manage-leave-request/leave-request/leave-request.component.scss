@@ -1,6 +1,12 @@
 .table-container{
   width: 100%;
   padding: 1rem;
+  mat-form-field{
+    @media (max-width:768px) {
+      width: 100% !important;
+      
+    }
+  }
 }
 .mat-elevation-z8{
   width: 100%;

@@ -14,7 +14,7 @@ import { ActivatedRouteSnapshot,CanDeactivateFn,Router,RouterStateSnapshot } fro
 export class UserFormComponent implements OnInit,OnDestroy {
   userForm!: FormGroup;
   hide=true;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private userService: UserService,  private ref: DialogRef<UserFormComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private userService: UserService,  private ref: DialogRef<UserComponent>) {
     this.userForm = this.fb.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
@@ -61,7 +61,7 @@ export class UserFormComponent implements OnInit,OnDestroy {
   }
 
   //closing pop up 
-  closePopUp() {
+  closePopUp() { 
     this.ref.close();
   }
 

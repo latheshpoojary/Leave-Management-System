@@ -1,11 +1,12 @@
 <section >
+  <article>
     <div class="add-icons">
-        <button mat-raised-button color="primary" (click)="onAdd()">
-            <p>Add Holiday</p>
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
-<mat-form-field appearance="outline">
+      <button mat-raised-button color="primary" (click)="onAdd()">
+          <p>Add Holiday</p>
+          <mat-icon>add</mat-icon>
+      </button>
+  </div>
+  <mat-form-field appearance="outline">
     <mat-label>Filter</mat-label>
     <input
       matInput
@@ -15,6 +16,8 @@
     />
   </mat-form-field>
 
+  </article>
+   
  
 
   <div class="lds-roller" *ngIf="isLoading">

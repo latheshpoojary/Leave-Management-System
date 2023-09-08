@@ -7,6 +7,7 @@ export class DateValidator {
       const toDateControl = control;
 
       if (!fromDateControl || !toDateControl) {
+        
         return null; // Return null if controls are not found
       }
 
@@ -31,13 +32,16 @@ export class DateValidator {
 
   static isDateBeforeToday(control: AbstractControl):ValidationErrors | null{
     const dateControlValue = control.value;
-    const currentDate = new Date().getDate();
-    const selectedDate = new Date(dateControlValue).getDate();
+    const currentDate = new Date().getTime()-1000*60*60*24;
+    const selectedDate = new Date(dateControlValue).getTime();
+    console.log("Current date",currentDate,"Selected date",selectedDate);
+    
     console.log(currentDate,"  :" , selectedDate);
     
-    if(selectedDate<currentDate){
-        return {beforeToday:true};
+    if(selectedDate>=currentDate){
+      return null;
     }
-    return null;
+    return {beforeToday:true};
+    
   }
 }

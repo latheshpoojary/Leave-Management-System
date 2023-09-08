@@ -42,13 +42,14 @@
         background-color: transparent;
         border: none;
         padding: 1rem;
+        color: black;
       }
     } 
     }
     button{
       width: 100%;
       padding: 1.5rem;
-      
+      color: var(--button-color);
     }
     
     

@@ -6,7 +6,7 @@
         <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>From</mat-label>
                 <input matInput [matDatepicker]="datepicker1" formControlName="from">
-                <mat-error *ngIf="leaveForm.get('from')?.hasError('beforeToday')">Date must be greaterThan today</mat-error>
+                <mat-error *ngIf="leaveForm.get('from')?.dirty && leaveForm.get('from')?.hasError('beforeToday')">Date must be greaterThan today</mat-error>
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="datepicker1"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker1>
@@ -19,8 +19,8 @@
         <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>To</mat-label>
                 <input matInput [matDatepicker]="datepicker2" formControlName="to" >
-                <mat-error *ngIf="leaveForm.get('to')?.hasError('beforeToday')">Date must be greaterThan today</mat-error>
-                <mat-error *ngIf="leaveForm.get('to')?.hasError('greaterThan')">To is lessThan From</mat-error>
+                <mat-error *ngIf="leaveForm.get('to')?.dirty && leaveForm.get('to')?.hasError('beforeToday')">Date must be greaterThan today</mat-error>
+                <mat-error *ngIf="leaveForm.get('to')?.hasError('greaterThan')">To is greaterThan From</mat-error>
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <!-- <mat-error >To must be greater than From</mat-error> -->
                 <mat-datepicker-toggle matIconSuffix [for]="datepicker2"></mat-datepicker-toggle>
@@ -45,7 +45,8 @@
             <input matInput formControlName="reason">
         </mat-form-field>
         <div mat-dialog-actions class="action">
-            <button mat-raised-button color="default"
+            <button mat-raised-button 
+            style="color: black;"
             [mat-dialog-close]="false">
               Cancel
             </button>

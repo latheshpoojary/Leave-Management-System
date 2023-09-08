@@ -9,8 +9,14 @@
   --third-color: #0052cc;
   --primary-color: #f4f5f7;
   font-size: min(4vw,16px);
+  --button-color:#fff;
+  --border-radius:8px;
 }
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+ 
+}
 
 

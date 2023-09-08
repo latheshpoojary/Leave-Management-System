@@ -113,6 +113,8 @@ export class UserComponent implements AfterViewInit{
      
     })
     popRef.afterClosed().subscribe(response=>{ 
+      console.log(response,"response from the pop up");
+      
       if(response){
         this.userService.deleteEmployee(this.deleteKey).subscribe(response => {
           this.fetchEmployee();

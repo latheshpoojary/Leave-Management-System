@@ -10,6 +10,9 @@ form{
   @media screen and (width<600px){
     grid-template-columns: 1fr;
   }
+  button{
+    color: var(--button-color);
+  }
   .mat-mdc-form-field{
     min-width: min(250px,100%);
     display: block;

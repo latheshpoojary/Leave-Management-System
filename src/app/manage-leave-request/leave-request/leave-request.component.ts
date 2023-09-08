@@ -3,6 +3,7 @@ import { RequestService } from 'src/app/shared/services/leave-request/request.se
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-leave-request',
@@ -16,7 +17,7 @@ export class LeaveRequestComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 input: any;
-  constructor(private requestService:RequestService){
+  constructor(private requestService:RequestService,private _snackBar: MatSnackBar){
     this.requestService.getAllLeaves().subscribe((response:any)=>{
      this.leaveRequest =response;
      this.dataSource = new MatTableDataSource(this.leaveRequest);
@@ -34,6 +35,13 @@ input: any;
       
   //   }
   // }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
   loadLeaveRequest(){
     this.requestService.getAllLeaves().subscribe((response:any)=>{
@@ -48,6 +56,10 @@ input: any;
   onEdit(userId:string,leaveId:string){
     this.requestService.updateStatus("accepted",userId,leaveId).subscribe(response=>{
       if(response){
+        this._snackBar.open("Leave Accepted Successfully","close",{
+          verticalPosition:'bottom',
+          horizontalPosition:'center'
+        })
         this.loadLeaveRequest();
       }
       
@@ -57,6 +69,10 @@ input: any;
   onDelete(userId:string,leaveId:string){
     this.requestService.updateStatus("rejected",userId,leaveId).subscribe(response=>{
       if(response){
+        this._snackBar.open("Leave Rejected Successfully","close",{
+          verticalPosition:'bottom',
+          horizontalPosition:'center'
+        })
         this.loadLeaveRequest();
       }
       
