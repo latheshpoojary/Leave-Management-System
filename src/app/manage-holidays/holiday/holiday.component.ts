@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { HolidayFormComponent } from '../holiday-form/holiday-form.component';
 import { DeleteDialogComponent } from 'src/app/manage-user/delete-dialog/delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-holiday',
@@ -16,7 +17,7 @@ export class HolidayComponent implements OnInit{
   isLoading=false;
   deleteKey!: string;
   editKey!: string;
-  constructor(private holidayService:HolidayService,private dialogue:MatDialog){}
+  constructor(private holidayService:HolidayService,private dialogue:MatDialog,private _snackBar: MatSnackBar){}
   ngOnInit(): void {
     this.holidayService.getAllHolidays().subscribe(response=>{
       this.holidays = response;   
@@ -74,10 +75,13 @@ export class HolidayComponent implements OnInit{
         
         this.holidayService.deleteHoliday(this.deleteKey).subscribe(response=>{
           console.log(response,"Delete Response");
+          this._snackBar.open("Deleted Successfully","close",{
+            duration:2000
+          })
           this.loadHoliday();
         })
       }else{
-        // this.loadHoliday();
+        this.loadHoliday();
       }
       
       

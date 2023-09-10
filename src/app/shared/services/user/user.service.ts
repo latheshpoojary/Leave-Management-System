@@ -101,13 +101,16 @@ export class UserService {
         errorMessage = "Email Not Found"
         break;
       case 'INVALID_EMAIL':
-        errorMessage = "Email Not Exist";
+        errorMessage = "Invalid Email";
         break;
       case 'INVALID_PASSWORD':
         errorMessage = "Password is Invalid";
         break;
       case 'USER_DISABLED':
         errorMessage = "Admin Restrict this Account";
+        break;
+      case 'EMAIL_EXISTS':
+        errorMessage = "Email Exist";
         break;
       default:
         errorMessage = "Unknown Error"; // Set a default message for unmatched cases

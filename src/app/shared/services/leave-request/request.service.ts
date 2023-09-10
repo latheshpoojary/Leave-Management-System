@@ -13,15 +13,18 @@ export class RequestService {
     return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/leaves.json').pipe(
       map(res => 
         { 
-           const leavesArr: any[] = []; 
-           Object.entries(res).forEach(([uid, val]) => { 
-            Object.entries(val).forEach(([leaveId, leave]:any) => { 
-              if(leave.status=="pending"){
-              leavesArr.push({ ...Object(leave), leaveId: leaveId, uid: uid }); 
+          const leavesArr: any[] = []; 
 
-              }
-            });
-           }); 
+          if(res){
+            Object.entries(res).forEach(([uid, val]) => { 
+             Object.entries(val).forEach(([leaveId, leave]:any) => { 
+               if(leave.status=="pending"){
+               leavesArr.push({ ...Object(leave), leaveId: leaveId, uid: uid }); 
+ 
+               }
+             });
+            }); 
+          }
           return leavesArr;
         })
     );

@@ -2,6 +2,7 @@
   width: 100%;
   padding: 1rem;
   mat-form-field{
+    width: 30%;
     @media (max-width:768px) {
       width: 100% !important;
       
@@ -34,4 +35,7 @@ table {
         width: 100%;
       }
     }
+  }
+  mat-paginator{
+    border: 1px solid grey;
   }

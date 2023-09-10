@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { CanDeactivateFn } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface UserData {
   id: string;
@@ -37,7 +38,7 @@ export class UserComponent implements AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
   dataInitialized!: boolean;
 
-  constructor( private userService: UserService, private dialog: MatDialog) {
+  constructor( private userService: UserService, private dialog: MatDialog,private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -98,17 +99,17 @@ export class UserComponent implements AfterViewInit{
    this.openDialogue(UserFormComponent,this.editKey);
   }
 
-  onDelete(key: string) {
+  onDelete(key: string,title:string) {
     this.deleteKey = key;
-   this.openDialogue(DeleteDialogComponent,this.deleteKey);
+   this.openDialogue(DeleteDialogComponent,this.deleteKey,title);
   }
 
-  openDialogue(component:any,key?:string,){
+  openDialogue(component:any,key?:string,title?:string){
     const popRef=this.dialog.open(component,{
      width:"min(80%,800px)",
      data:{
       key:key,
-      
+      title:title
      }
      
     })
@@ -118,6 +119,9 @@ export class UserComponent implements AfterViewInit{
       if(response){
         this.userService.deleteEmployee(this.deleteKey).subscribe(response => {
           this.fetchEmployee();
+          this._snackBar.open("User Deleted Successfully","close",{
+            duration:2000
+          })
         })
       }
       else{

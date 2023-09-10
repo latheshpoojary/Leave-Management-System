@@ -61,41 +61,8 @@ export class LeaveService {
   }
 
   editLeave(key: string, userKey: string, value: any) {
-    if (value.type === 'Casual Leave') {
-      const currentValue = this.remaining_casual_leaves.value;
-      if (currentValue) {
-        this.remaining_casual_leaves.next(currentValue - 1);
-      }
-      else {
-        this.remaining_casual_leaves.next(2);
-      }
-    }
-    if (value.type === 'Sick Leave') {
-      const currentValue = this.remaining_sick_leaves.value;
-      if (currentValue) {
-        this.remaining_sick_leaves.next(currentValue - 1);
-      }
-      else {
-        this.remaining_sick_leaves.next(2);
-      }
-    }
-    if (value.type === 'Paternity Leave') {
-      const currentValue = this.remaining_paternity_leaves.value;
-      if (currentValue) {
-
-        this.remaining_paternity_leaves.next(currentValue - 1);
-      }
-      else {
-        this.remaining_paternity_leaves.next(2);
-
-      }
-    }
-    return this.http.patch('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/leaves/' + userKey + '/' + key + '.json', {
-      value,
-      casual_leave: this.remaining_casual_leaves.value,
-      sick_leave: this.remaining_sick_leaves.value,
-      paternity_leave: this.remaining_paternity_leaves.value
-  });
+  
+    return this.http.patch('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/leaves/' + userKey + '/' + key + '.json', value);
   }
 
   deleteLeave(key: any, userKey: any) {

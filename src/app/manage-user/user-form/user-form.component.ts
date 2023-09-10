@@ -5,16 +5,17 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { UserComponent } from '../user/user.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot,CanDeactivateFn,Router,RouterStateSnapshot } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit,OnDestroy {
+export class UserFormComponent implements OnInit {
   userForm!: FormGroup;
   hide=true;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private userService: UserService,  private ref: DialogRef<UserComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private userService: UserService,  private ref: DialogRef<UserComponent>,private _snackBar: MatSnackBar) {
     this.userForm = this.fb.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
@@ -40,6 +41,10 @@ export class UserFormComponent implements OnInit,OnDestroy {
       if (this.data.key) {   //edit when edit key exist
         this.userService.editEmployee(this.data.key, this.userForm.value).subscribe(response => {
           console.log(response, "edit Employee response");
+          this._snackBar.open("User Updated Successfully 🎉","close",{
+            duration:2000
+          });
+
           this.closePopUp();
         },
           error => {
@@ -50,10 +55,17 @@ export class UserFormComponent implements OnInit,OnDestroy {
       else {
         this.userService.addEmployee(email, password,this.userForm.value).subscribe(response => {
           console.log(response);
+          this._snackBar.open("User Added Successfully 🎉","close",{
+            duration:2000
+          });
+
           this.closePopUp();
         },
           error => {
+            this._snackBar.open(error,"close")
             console.log(error);
+            this.closePopUp();
+
           }
         )
       }
@@ -79,15 +91,7 @@ export class UserFormComponent implements OnInit,OnDestroy {
     })
   }
 
-  ngOnDestroy(): void {
-    // this.router.isActive()
-    if(this.userForm.invalid){
-      if(confirm('You have unsaved changes. Do you really want to leave?')){
 
-      }
-    }
-    
-  }
   
 }
 

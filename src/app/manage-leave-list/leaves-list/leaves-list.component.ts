@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DeleteDialogComponent } from 'src/app/manage-user/delete-dialog/delete-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-leaves-list',
@@ -23,7 +24,7 @@ export class LeavesListComponent {
   public userKey!:string | null ;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(public leaveService:LeaveService,private dialogue:MatDialog){
+  constructor(public leaveService:LeaveService,private dialogue:MatDialog,private _snackBar: MatSnackBar){
   this.userKey = localStorage.getItem("user");
    this.leaveService.fetchLeave(this.userKey).subscribe((response:any)=>{
       this.leaves = response;
@@ -92,6 +93,9 @@ export class LeavesListComponent {
         this.leaveService.deleteLeave(key,userKey).subscribe(response=>{
           console.log(response);
           this.loadLeaves();   
+          this._snackBar.open("Leave Request Deleted Successfully","close",{
+            duration:2000
+          })
         })
         }
       else{

@@ -12,6 +12,9 @@ form{
   }
   button{
     color: var(--button-color);
+    &.eye{
+      color: black;
+    }
   }
   .mat-mdc-form-field{
     min-width: min(250px,100%);
@@ -28,6 +31,7 @@ form{
     padding: 1rem;
   }
 }
+
 
 
 

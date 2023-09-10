@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,700;1,200;1,300&family=Rubik+Iso&display=swap');
+
+section{
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    display: grid;
+    place-items:center ;
+    background-image: url(../../shared/images/43e5f114cebbaf021c26048dd4b21e4f.png);
+    background-position:center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    .center{
+        text-align: center;
+        padding: 7rem 5rem;
+        h1{
+            margin: 0;
+            padding: 0;
+            font-size: 5rem;
+            line-height: 5rem;
+            font-family: 'Rubik Iso', cursive;
+        }
+        p{
+            margin:3rem 0;
+            padding: 0;
+            font-size: 2rem;
+            line-height: 3rem;
+            font-family: 'Rubik Iso', cursive;
+
+
+        }
+        button{
+            font-family: 'Rubik Iso', cursive;
+            
+        }
+    }
+}

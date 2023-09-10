@@ -2,6 +2,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HolidayService } from 'src/app/shared/services/holidays/holiday.service';
 import { DateValidator } from 'src/app/shared/validator/toDate.validator';
 
@@ -13,7 +14,7 @@ import { DateValidator } from 'src/app/shared/validator/toDate.validator';
 export class HolidayFormComponent implements OnInit{
   isEditMode=false;
   holidayForm! :FormGroup;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private holidayService:HolidayService,private ref:DialogRef<HolidayFormComponent>){
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private holidayService:HolidayService,private ref:DialogRef<HolidayFormComponent>,private _snackBar: MatSnackBar){
     this.holidayForm = this.fb.group({
       event:['',Validators.required],
       description:['',Validators.required],
@@ -44,12 +45,18 @@ export class HolidayFormComponent implements OnInit{
   onSubmit(){
     if(this.data.key){
       this.holidayService.updateHoliday(this.data.key,this.holidayForm.value).subscribe(response=>{
+        this._snackBar.open("Holiday Updated Successfully 🎉","close",{
+          duration:2000
+        })
         this.ref.close();
       })
     }
     else{
       this.holidayService.addHoliday(this.holidayForm.value).subscribe(response=>{
         console.log(response); 
+        this._snackBar.open("Holiday Added Successfully 🎉","close",{
+          duration:2000
+        })
         this.ref.close();
       },error=>{
         console.log(error); 

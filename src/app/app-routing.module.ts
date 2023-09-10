@@ -9,6 +9,7 @@ import { ManageLeaveRequestModule } from './manage-leave-request/manage-leave-re
 import { ManageLeaveListModule } from './manage-leave-list/manage-leave-list.module';
 import { formGuard } from './shared/guards/deactivate/form.guard';
 import { adminGuard } from './shared/guards/adminGuard/admin.guard';
+import { NotfoundComponent } from './common component/notfound/notfound.component';
 const routes: Routes = [
   {
     path:'',
@@ -45,6 +46,10 @@ const routes: Routes = [
       }
     ]   
   },
+  {
+    path:'**',
+    component:NotfoundComponent
+  }
 ];
 
 @NgModule({
