@@ -64,7 +64,7 @@ input: any;
   onEdit(userId:string,leaveId:string){
     this.requestService.updateStatus("accepted",userId,leaveId).subscribe(response=>{
       if(response){
-        this._snackBar.open("Leave Accepted Successfully","close",{
+        this._snackBar.open("✅  Leave Accepted Successfully","❌",{
           verticalPosition:'bottom',
           horizontalPosition:'center'
         })
@@ -77,7 +77,7 @@ input: any;
   onDelete(userId:string,leaveId:string){
     this.requestService.updateStatus("rejected",userId,leaveId).subscribe(response=>{
       if(response){
-        this._snackBar.open("Leave Rejected Successfully","close",{
+        this._snackBar.open("✅ Leave Rejected Successfully","❌",{
           verticalPosition:'bottom',
           horizontalPosition:'center'
         })

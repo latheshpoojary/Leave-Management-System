@@ -14,7 +14,7 @@
         <h3 style="background-color:#7df1e9 ;">CL</h3>
         <p>{{
           (leaveService.remaining_casual_leaves | async)? 
-            3-(leaveService.remaining_casual_leaves | async) : 0
+            (leaveService.remaining_casual_leaves | async) : 0
           }}/3
         </p>
       </div>
@@ -22,14 +22,14 @@
         <h3 style="background-color:#d0ecff ;">SL</h3>
         <p>{{
           (leaveService.remaining_sick_leaves | async)? 
-            3-(leaveService.remaining_sick_leaves | async) : 0
+            (leaveService.remaining_sick_leaves | async) : 0
           }}/3</p>
       </div>
       <div class="card">
         <h3 style="background-color:#fde1dc ;">PL</h3>
         <p>{{
           (leaveService.remaining_paternity_leaves | async)? 
-            3-(leaveService.remaining_paternity_leaves | async) : 0
+            (leaveService.remaining_paternity_leaves | async) : 0
           }}/3</p>
       </div>
     </div>

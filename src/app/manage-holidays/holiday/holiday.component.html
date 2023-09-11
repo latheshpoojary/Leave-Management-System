@@ -32,9 +32,11 @@
     <span>Loading Please wait.......</span>
   </div>
   <div class="outer-layer">
-    <div class="container" *ngIf="!isLoading" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="container" *ngIf="dataSource" cdkDropList (cdkDropListDropped)="drop($event)">
 
-        <div class="card" *ngFor="let holiday of dataSource.filteredData" cdkDragBoundary=".container" cdkDrag>
+        <div 
+          [style.backgroundColor]="getBackgroundColor(holiday.date)"
+          class="card" *ngFor="let holiday of dataSource.filteredData" cdkDragBoundary=".container" cdkDrag>
           <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <div class="left">
                 <div class="header">

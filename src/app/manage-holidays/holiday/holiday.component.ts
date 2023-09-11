@@ -24,7 +24,9 @@ export class HolidayComponent implements OnInit{
   ngOnInit(): void {
     this.holidayService.getAllHolidays().subscribe(response=>{
       this.holidays = response;   
-      this.dataSource = new MatTableDataSource(this.holidays);
+      if(response.length>0){
+        this.dataSource = new MatTableDataSource(this.holidays);
+      }
       console.log(this.dataSource);
       
       console.log(this.holidays);
@@ -49,6 +51,11 @@ export class HolidayComponent implements OnInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getBackgroundColor(holidayDate:Date):string{
+    const today = new Date();
+    return holidayDate>today? '#f2f2f2' : new Date(holidayDate)===today ? '#fffff':'#e6ffe6';
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -82,8 +89,9 @@ export class HolidayComponent implements OnInit{
         
         this.holidayService.deleteHoliday(this.deleteKey).subscribe(response=>{
           console.log(response,"Delete Response");
-          this._snackBar.open("Deleted Successfully","close",{
-            duration:2000
+          this._snackBar.open("Deleted Successfully","❌",{
+            duration:2000,
+          
           })
           this.loadHoliday();
         })

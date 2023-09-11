@@ -34,9 +34,9 @@
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Type</mat-label>
             <mat-select formControlName="type">
-              <mat-option value="Casual Leave" [disabled]="(leaveService.remaining_casual_leaves | async)==0">Casual Leave</mat-option>
-              <mat-option value="Sick Leave" [disabled]="(leaveService.remaining_sick_leaves | async)==0">Sick Leave</mat-option>
-              <mat-option value="Paternity Leave" [disabled]="(leaveService.remaining_paternity_leaves | async)==0">Paternity Leave</mat-option>
+              <mat-option value="Casual Leave" [disabled]="(leaveService.remaining_casual_leaves | async)==3">Casual Leave</mat-option>
+              <mat-option value="Sick Leave" [disabled]="(leaveService.remaining_sick_leaves | async)==3">Sick Leave</mat-option>
+              <mat-option value="Paternity Leave" [disabled]="(leaveService.remaining_paternity_leaves | async)==3">Paternity Leave</mat-option>
               <mat-option value="Loss of Pay">Loss of Pay</mat-option>
             </mat-select>
         </mat-form-field>

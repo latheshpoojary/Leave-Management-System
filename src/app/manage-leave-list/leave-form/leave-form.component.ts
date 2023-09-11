@@ -58,7 +58,7 @@ export class LeaveFormComponent implements OnInit{
     if(this.data.key){
       this.leaveService.editLeave(this.data.key,this.data.userKey,this.leaveForm.value).subscribe(response=>{
         if(response){
-          this._snackBar.open("Leave Updated Successfully","close",{
+          this._snackBar.open("✅  Leave Updated Successfully","❌",{
             duration:2000
           })
           this.ref.close();
@@ -67,7 +67,7 @@ export class LeaveFormComponent implements OnInit{
     }
     else{
       this.leaveService.addLeaves(this.leaveForm.value).subscribe(response=>{
-        this._snackBar.open("Leave Request Sent Successfully","close",{
+        this._snackBar.open("✅  Leave Request Sent Successfully","❌",{
           duration:2000
         })
         if(response){   

@@ -21,29 +21,29 @@ export class LeaveService {
     if (value.type === 'Casual Leave') {
       const currentValue = this.remaining_casual_leaves.value;
       if (currentValue) {
-        this.remaining_casual_leaves.next(currentValue - 1);
+        this.remaining_casual_leaves.next(currentValue + 1);
       }
       else {
-        this.remaining_casual_leaves.next(2);
+        this.remaining_casual_leaves.next(1);
       }
     }
     if (value.type === 'Sick Leave') {
       const currentValue = this.remaining_sick_leaves.value;
       if (currentValue) {
-        this.remaining_sick_leaves.next(currentValue - 1);
+        this.remaining_sick_leaves.next(currentValue + 1);
       }
       else {
-        this.remaining_sick_leaves.next(2);
+        this.remaining_sick_leaves.next(1);
       }
     }
     if (value.type === 'Paternity Leave') {
       const currentValue = this.remaining_paternity_leaves.value;
       if (currentValue) {
 
-        this.remaining_paternity_leaves.next(currentValue - 1);
+        this.remaining_paternity_leaves.next(currentValue + 1);
       }
       else {
-        this.remaining_paternity_leaves.next(2);
+        this.remaining_paternity_leaves.next(1);
 
       }
     }

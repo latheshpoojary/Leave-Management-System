@@ -101,7 +101,7 @@ export class LeavesListComponent {
         this.leaveService.deleteLeave(key,userKey).subscribe(response=>{
           console.log(response);
           this.loadLeaves();   
-          this._snackBar.open("Leave Request Deleted Successfully","close",{
+          this._snackBar.open("✅  Leave Request Deleted Successfully","❌",{
             duration:2000
           })
         })

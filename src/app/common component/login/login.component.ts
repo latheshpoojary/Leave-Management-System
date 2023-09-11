@@ -42,7 +42,9 @@ export class LoginComponent {
       this.route.navigate(['dashboard']);
     },
     (error:any)=>{
-      this._snackBar.open(error,"Close");  
+      this._snackBar.open(error,"❌",{
+        duration:2000
+      });  
     }) 
   }
 }

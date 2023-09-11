@@ -45,7 +45,7 @@ export class HolidayFormComponent implements OnInit{
   onSubmit(){
     if(this.data.key){
       this.holidayService.updateHoliday(this.data.key,this.holidayForm.value).subscribe(response=>{
-        this._snackBar.open("Holiday Updated Successfully 🎉","close",{
+        this._snackBar.open("✅  Holiday Updated Successfully","❌",{
           duration:2000
         })
         this.ref.close();
@@ -54,12 +54,14 @@ export class HolidayFormComponent implements OnInit{
     else{
       this.holidayService.addHoliday(this.holidayForm.value).subscribe(response=>{
         console.log(response); 
-        this._snackBar.open("Holiday Added Successfully 🎉","close",{
+        this._snackBar.open("✅  Holiday Added Successfully 🎉","❌",{
           duration:2000
         })
         this.ref.close();
       },error=>{
-        console.log(error); 
+        this._snackBar.open("Something Went Wrong🤔","❌",{
+          duration:2000
+        })
       })
     }
     
