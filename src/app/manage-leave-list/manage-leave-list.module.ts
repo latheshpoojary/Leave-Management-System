@@ -16,6 +16,11 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { LeaveFormComponent } from './leave-form/leave-form.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import {
+  CdkDrag,
+  CdkDragPlaceholder,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     LeavesListComponent,
@@ -35,7 +40,10 @@ import { MatSortModule } from '@angular/material/sort';
     MatDatepickerModule,
     MatIconModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    CdkDrag,
+    CdkDragPlaceholder,
+    CdkDropList,
   ]
 })
 export class ManageLeaveListModule { }

@@ -5,7 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { HolidayFormComponent } from '../holiday-form/holiday-form.component';
 import { DeleteDialogComponent } from 'src/app/manage-user/delete-dialog/delete-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import {
+  CdkDragDrop,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-holiday',
   templateUrl: './holiday.component.html',
@@ -46,6 +49,10 @@ export class HolidayComponent implements OnInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    moveItemInArray(this.holidays, event.previousIndex, event.currentIndex);
   }
 
   onAdd(){

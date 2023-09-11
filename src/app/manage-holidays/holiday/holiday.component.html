@@ -32,9 +32,10 @@
     <span>Loading Please wait.......</span>
   </div>
   <div class="outer-layer">
-    <div class="container" *ngIf="!isLoading">
+    <div class="container" *ngIf="!isLoading" cdkDropList (cdkDropListDropped)="drop($event)">
 
-        <div class="card" *ngFor="let holiday of dataSource.filteredData">
+        <div class="card" *ngFor="let holiday of dataSource.filteredData" cdkDragBoundary=".container" cdkDrag>
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <div class="left">
                 <div class="header">
                     <h1>{{holiday.event | titlecase}}</h1>    

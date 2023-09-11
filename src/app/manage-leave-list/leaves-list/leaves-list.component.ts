@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DeleteDialogComponent } from 'src/app/manage-user/delete-dialog/delete-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-leaves-list',
@@ -79,6 +80,13 @@ export class LeavesListComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    const dataArray = this.dataSource.data;
+    moveItemInArray(dataArray , event.previousIndex, event.currentIndex);
+    this.dataSource.data = dataArray;
+
   }
 
   openPopUp(component:any,key?:string,userKey?:string | null) {

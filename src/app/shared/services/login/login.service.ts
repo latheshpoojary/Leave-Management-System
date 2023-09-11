@@ -79,7 +79,7 @@ export class LoginService {
       password: password,
       returnSecureToken: true
     }).pipe(
-      mergeMap(authResponse => {
+      switchMap(authResponse => {
         if (authResponse.email === 'admin@pacewisdom.com') {
           this.isAdmin = true;
           localStorage.setItem("admin", "this.isAdmin");

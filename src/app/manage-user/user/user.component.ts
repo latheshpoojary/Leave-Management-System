@@ -1,13 +1,15 @@
 import { AfterViewInit, Component,ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableDataSourcePaginator } from '@angular/material/table';
 import { UserDetails, UserService } from 'src/app/shared/services/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { CanDeactivateFn } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DataSource } from '@angular/cdk/collections';
 
 export interface UserData {
   id: string;
@@ -42,16 +44,21 @@ export class UserComponent implements AfterViewInit{
   }
 
   ngOnInit() {
-
+    // let maxUserId;
     this.userService.getAllEmployees().subscribe(response => {
       const employeeList = response;
+      if(response.length!=0){
+        this.userService.userId$.next(response.reduce((max: number, obj: { userId: number; }) => (obj.userId > max ? obj.userId : max), -Infinity)+1);
+      //  console.log("Maximum User ID:", maxUserId);
+       ;      
+      }
       console.log(employeeList);
-      
       this.dataSource = new MatTableDataSource(employeeList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       console.log(this.dataSource);
       console.log(this.dataSource);
+      
     });
     // this.isLoading = false;
   }
@@ -70,6 +77,7 @@ export class UserComponent implements AfterViewInit{
     // this.isLoading = true;
     this.userService.getAllEmployees().subscribe(response => {
       // this.isLoading = false;
+      this.userService.userId$.next(response.reduce((max: number, obj: { id: number; }) => (obj.id > max ? obj.id : max), -Infinity)+1);
       const employeeList = response;
       this.dataSource = new MatTableDataSource(employeeList);
       this.dataSource.paginator =this.paginator ;
@@ -87,6 +95,13 @@ export class UserComponent implements AfterViewInit{
     }
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    const dataArray = this.dataSource.data;
+    moveItemInArray(dataArray , event.previousIndex, event.currentIndex);
+    this.dataSource.data = dataArray;
+
+  }
+  
   // reset the form after submission
   onAdd(){
     this.openDialogue(UserFormComponent);

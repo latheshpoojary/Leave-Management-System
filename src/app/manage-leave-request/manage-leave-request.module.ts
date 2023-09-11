@@ -16,6 +16,11 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
+import {
+  CdkDrag,
+  CdkDragPlaceholder,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,10 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CdkDrag,
+    CdkDragPlaceholder,
+    CdkDropList,
   ]
 })
 export class ManageLeaveRequestModule { }

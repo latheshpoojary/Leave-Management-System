@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-leave-request',
@@ -41,6 +42,13 @@ input: any;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    const dataArray = this.dataSource.data;
+    moveItemInArray(dataArray , event.previousIndex, event.currentIndex);
+    this.dataSource.data = dataArray;
+
   }
 
   loadLeaveRequest(){

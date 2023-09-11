@@ -14,6 +14,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMenuModule} from '@angular/material/menu';
+import {
+  CdkDrag,
+  CdkDragPlaceholder,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     HolidayComponent,
@@ -32,7 +37,11 @@ import {MatMenuModule} from '@angular/material/menu';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    CdkDrag,
+    CdkDragPlaceholder,
+    CdkDropList,
+    
   ]
 })
 export class ManageHolidaysModule { }

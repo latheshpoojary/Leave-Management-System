@@ -6,6 +6,7 @@ import { UserComponent } from '../user/user.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot,CanDeactivateFn,Router,RouterStateSnapshot } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { passwordValidator } from 'src/app/shared/validator/password.validator';
 
 @Component({
   selector: 'app-user-form',
@@ -17,12 +18,12 @@ export class UserFormComponent implements OnInit {
   hide=true;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private userService: UserService,  private ref: DialogRef<UserComponent>,private _snackBar: MatSnackBar) {
     this.userForm = this.fb.group({
-      id: ['', Validators.required],
       name: ['', Validators.required],
       designation: ['', Validators.required],
       role: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      confirm_password:['' ,[Validators.required,passwordValidator.passwordShouldMatch]]
     })
   }
 
@@ -80,13 +81,14 @@ export class UserFormComponent implements OnInit {
   //editing form data
   setFormData(key: string) {
     this.userService.getEmployeeByKey(key).subscribe((response: any) => {
-      this.userForm.setValue({
-        id: response['id'],
+      this.userForm.patchValue({
         name: response['name'],
         designation: response['designation'],
         role: response['role'],
         email: response['email'],
-        password: response['password']
+        password: response['password'],
+        confirm_password:response['password']
+
       })
     })
   }

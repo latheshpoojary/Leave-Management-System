@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './common component/login/login.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './common component/sidebar/sidebar.component';
 import { loginGuard } from './shared/guards/authGuard/login.guard';
 import { ManageUserModule } from '../app/manage-user/manage-user.module';
 import { ManageHolidaysModule } from './manage-holidays/manage-holidays.module';
@@ -10,6 +10,7 @@ import { ManageLeaveListModule } from './manage-leave-list/manage-leave-list.mod
 import { formGuard } from './shared/guards/deactivate/form.guard';
 import { adminGuard } from './shared/guards/adminGuard/admin.guard';
 import { NotfoundComponent } from './common component/notfound/notfound.component';
+import { userGuard } from './shared/guards/userGuard/user.guard';
 const routes: Routes = [
   {
     path:'',
@@ -42,7 +43,7 @@ const routes: Routes = [
       {
         path:'leaves',
         loadChildren:()=>import('../app/manage-leave-list/manage-leave-list-routing.module').then(m=>ManageLeaveListModule),
-        canActivate:[loginGuard]
+        canActivate:[userGuard]
       }
     ]   
   },

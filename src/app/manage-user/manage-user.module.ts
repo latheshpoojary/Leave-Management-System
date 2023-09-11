@@ -14,6 +14,11 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule, matDialogAnimations} from '@angular/material/dialog';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import {
+  CdkDrag,
+  CdkDragPlaceholder,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -36,6 +41,9 @@ import { UserFormComponent } from './user-form/user-form.component';
     MatSelectModule,
     ReactiveFormsModule,
     MatDialogModule,
+    CdkDrag,
+    CdkDragPlaceholder,
+    CdkDropList,
     
   ]
 })

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, switchMap, throwError } from 'rxjs';
 
 interface User {
   kind: string,
@@ -24,6 +24,7 @@ export interface UserDetails{
   providedIn: 'root'
 })
 export class UserService {
+  userId$=new BehaviorSubject<any>(1);
   constructor(private http: HttpClient) { }
 
   addEmployee(email: string, password: string,formValue:any) {
@@ -33,6 +34,7 @@ export class UserService {
       returnSecureToken: true
     }).pipe(
       switchMap((response)=>{
+        
        return this.addEmployeeRealTime(formValue,response.localId);
         
       }),
@@ -40,16 +42,27 @@ export class UserService {
     )
   }
 
+  /**
+   * x`
+   * @param user 
+   * @param id 
+   * @returns 
+   */
   addEmployeeRealTime(user:any,id:string){
     console.log(user);
+    this.userId$.subscribe(response=>{
+      console.log(response,"UserId on addEmployee");
+      
+    })
+    
     return this.http.put<UserDetails[]>('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+id+'.json',{
-      id:user.id,
       name:user.name,
       designation:user.designation,
       role:user.role,
       email:user.email,
       password:user.password,
-      isDeleted:false
+      isDeleted:false,
+      id:this.userId$.value
     });
   }
 
@@ -57,7 +70,7 @@ export class UserService {
   getAllEmployees():Observable<any>{
     return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user.json').pipe(
       map(
-        (employee: any) => {
+        (employee: any) => { 
           const dataArray = Object.keys(employee).map((key) =>{
             if(!employee[key].isDeleted){
               return {
@@ -76,7 +89,7 @@ export class UserService {
   }
 
   editEmployee(key:string,value:any){
-    return this.http.put('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+key+'.json',value);
+    return this.http.patch('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/user/'+key+'.json',value);
   }
 
   deleteEmployee(key:string){
