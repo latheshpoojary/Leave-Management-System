@@ -42,7 +42,7 @@ export class UserFormComponent implements OnInit {
       if (this.data.key) {   //edit when edit key exist
         this.userService.editEmployee(this.data.key, this.userForm.value).subscribe(response => {
           console.log(response, "edit Employee response");
-          this._snackBar.open("User Updated Successfully 🎉","❌",{
+          this._snackBar.open("✅  User Updated Successfully 🎉","❌",{
             duration:2000
           });
 
@@ -58,7 +58,7 @@ export class UserFormComponent implements OnInit {
       else {
         this.userService.addEmployee(email, password,this.userForm.value).subscribe(response => {
           console.log(response);
-          this._snackBar.open("User Added Successfully 🎉","❌",{
+          this._snackBar.open("✅  User Added Successfully 🎉","❌",{
             duration:2000
           });
 

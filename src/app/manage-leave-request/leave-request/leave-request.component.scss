@@ -40,6 +40,15 @@ table {
       cursor: move;
       background-color: #fff;
     }
+    .type{
+      width: 100%;
+      max-width: 130px;
+      height: 2.5rem;
+      display: grid;
+      place-content: center;
+      border-radius: 20px;
+      padding: 0.5rem;
+    }
   }
   mat-paginator{
     border: 1px solid grey;

@@ -37,7 +37,11 @@
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
           <td mat-cell *matCellDef="let row">
-            {{ row.type | titlecase }}
+            <div 
+              class="type" 
+              [style.backgroundColor]="row.type==='Casual Leave'?'#7df1e9':row.type==='Sick Leave'?'#d0ecff ':'#fde1dc'">
+              {{ row.type | titlecase }}
+            </div>
           </td>
         </ng-container>
 

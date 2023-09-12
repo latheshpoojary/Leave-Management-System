@@ -72,10 +72,14 @@ section{
         height: 100%;
         white-space: nowrap;
         border-bottom: 1px solid grey;
-        .type{
-          font-size:1rem ;
-          font-weight: 500;
-
+        .type{        
+            width: 100%;
+            max-width: 130px;
+            height: 2.5rem;
+            display: grid;
+            place-content: center;
+            border-radius: 20px;
+            padding: 0.5rem;
         }
         .status{
           font-size: 1rem;
