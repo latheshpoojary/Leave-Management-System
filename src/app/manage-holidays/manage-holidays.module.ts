@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import { ManageHolidaysRoutingModule } from './manage-holidays-routing.module';
 import { HolidayComponent } from './holiday/holiday.component';
@@ -19,10 +19,12 @@ import {
   CdkDragPlaceholder,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
+import { HolidayPipe } from '../shared/pipe/holiday.pipe';
 @NgModule({
   declarations: [
     HolidayComponent,
-    HolidayFormComponent
+    HolidayFormComponent,
+    HolidayPipe,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import {
     CdkDragPlaceholder,
     CdkDropList,
     
-  ]
+  ],
+  providers:[TitleCasePipe],
 })
 export class ManageHolidaysModule { }

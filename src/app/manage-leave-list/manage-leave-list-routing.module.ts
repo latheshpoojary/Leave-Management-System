@@ -5,12 +5,12 @@ import { LeavesListComponent } from './leaves-list/leaves-list.component';
 const routes: Routes = [
   {
     path:'',
-    component:LeavesListComponent
-  }
+    component:LeavesListComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ManageLeaveListRoutingModule { }

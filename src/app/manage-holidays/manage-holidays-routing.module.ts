@@ -5,12 +5,12 @@ import { HolidayComponent } from './holiday/holiday.component';
 const routes: Routes = [
   {
     path:'',
-    component:HolidayComponent
-  }
+    component:HolidayComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ManageHolidaysRoutingModule { }

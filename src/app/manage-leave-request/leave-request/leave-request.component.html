@@ -9,31 +9,32 @@
     />
   </mat-form-field>
     <div class="mat-elevation-z8" >
+      <!-- Table to display the leave request Details -->
       <table mat-table [dataSource]="dataSource" matSort cdkDropList (cdkDropListDropped)="drop($event)">
         <!-- ID Column -->
         <ng-container matColumnDef="userId">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
           <td mat-cell *matCellDef="let row">PW{{ row.userId }}</td>
         </ng-container>
-
+        <!-- From date -->
         <ng-container matColumnDef="from">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>From</th>
-            <td mat-cell *matCellDef="let row">{{ row.from | date:'dd-MMMM-yyyy' }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.from | date:'dd-MMM-yyyy' }}</td>
           </ng-container>
 
-        <!-- Progress Column -->
+        <!-- To Date Column -->
         <ng-container matColumnDef="to">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>To</th>
-          <td mat-cell *matCellDef="let row">{{ row.to | date:'dd-MMMM-yyyy' }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.to | date:'dd-MMM-yyyy' }}</td>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- Reason Column -->
         <ng-container matColumnDef="reason">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Reason</th>
           <td mat-cell *matCellDef="let row">{{ row.reason | titlecase }}</td>
         </ng-container>
 
-        <!-- Designation Column -->
+        <!-- Type Column -->
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
           <td mat-cell *matCellDef="let row">
@@ -45,7 +46,7 @@
           </td>
         </ng-container>
 
-        <!-- Role Column -->
+        <!-- Accept and Reject Column -->
         
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
@@ -81,12 +82,6 @@
             Empty Leave Request
           </td>
         </tr>
-        <!-- Row shown when there is no matching data.  -->
-       <!-- <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">
-            No data matching the filter "{{ input.value }}"
-          </td>
-        </tr>  -->
       </table>
     </div>
     <mat-paginator

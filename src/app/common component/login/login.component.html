@@ -1,22 +1,44 @@
-<section class="align">
-    <div  class="register">
-      <h2>Log In</h2>
-      <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Enter your email</mat-label>
-          <input matInput placeholder="pat@example.com" formControlName="email" required>
-          <mat-error *ngIf="form['email'].invalid">Email is required</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Enter your password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-          <mat-error *ngIf="form['password'].invalid">Password is required</mat-error>
-          <button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-        <button mat-raised-button style="background-color: var(--third-color);" [disabled]="userForm.invalid">Log In</button>
-      </form> 
+<section>
+    <div class="welcome" @fadeIn>
+      <img src="" alt="">
+      <h1>TIME TO UNPLUG</h1>
+      <p>Mark your calendar for some quality time off.</p>
     </div>
+    <div class="login" @fadeIn>
+      <div  class="register">
+        <img src="../../../assets/images/logo-no-background.svg" alt="">
+        <div class="heading">
+          
+          <h1>Welcome Back,</h1>
+          <p>Log In to continue</p>
+        </div>
+        
+        <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="pat@example.com" formControlName="email" required>
+            <mat-error *ngIf="form['email'].invalid">Email is required</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="•••••••••••••••">
+            <mat-error *ngIf="form['password'].invalid">Password is required</mat-error>
+            <button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <button mat-raised-button style="background-color: var(--third-color);" [disabled]="userForm.invalid">Log In</button>
+        </form> 
+      </div>
+      <footer>
+        <div class="copyright">
+          &copy;Made by Lathesh. All rights reserved.
+      </div>
+      </footer>
+    </div>
+    
+   
 </section>
+
   

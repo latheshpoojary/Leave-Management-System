@@ -1,0 +1,38 @@
+h1{
+    text-align: center;
+    border-bottom: 1px solid grey;
+    background-color: var(--third-color);
+    color: white !important;
+    margin: 0;
+}
+.content{
+    height: 100px;
+    background-color: #f0f0f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    h3{
+        margin: 0 !important;
+        font-weight: 500;
+        font-size: 1rem;
+        color: black;
+        span{
+            font-size: 1rem;
+            font-weight: 800;
+        }
+    }
+   
+}
+.action{
+    padding: 1rem;
+    background-color: #f0f0f1;
+
+    button{
+        font-size: 1rem;
+        @media (max-width:768px){
+            width: 100px;
+        }
+    }
+}
+

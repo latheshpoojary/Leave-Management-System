@@ -34,14 +34,9 @@ export class DateValidator {
     const dateControlValue = control.value;
     const currentDate = new Date().getTime()-1000*60*60*24;
     const selectedDate = new Date(dateControlValue).getTime();
-    console.log("Current date",currentDate,"Selected date",selectedDate);
-    
-    console.log(currentDate,"  :" , selectedDate);
-    
     if(selectedDate>=currentDate){
       return null;
     }
     return {beforeToday:true};
-    
   }
 }

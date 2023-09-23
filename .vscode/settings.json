@@ -9,5 +9,9 @@
         "workbench.colorTheme": "undefined",
         "workbench.colorCustomizations": "undefined",
         "window.zoomLevel": "undefined"
-    }
+    },
+    "svg.preview.background": "transparent",
+    "cSpell.words": [
+        "dscdscfvcsc"
+    ]
 }

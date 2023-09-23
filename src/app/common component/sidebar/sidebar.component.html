@@ -3,8 +3,11 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar>
+      <span class="welcome">Welcome Back,<h1>{{(userName | titlecase) || 'Admin'}}</h1></span>
+    </mat-toolbar>
     <mat-nav-list>
+      
       <div mat-list-item class="list" *ngIf="isAdmin" routerLink="user" routerLinkActive="active">
         <mat-icon>group</mat-icon>
         <a  >
@@ -31,9 +34,9 @@
       </div>
       <div mat-list-item class="list sm-logout">
         <mat-icon>logout</mat-icon>
-        <a >
-          <span (click)="logout()">logout</span>
-        </a>
+        <button (click)="logout()">
+          <span>Log out</span>
+        </button>
       </div>
     
     </mat-nav-list>
@@ -49,13 +52,15 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span style="color: var(--button-color);">Leave Management System</span>
+      <span style="color: white;">
+        <img src="../../../assets/images/logo-no-backgroundText.svg" alt="">
+      </span>
       <mat-icon 
         style="color: var(--button-color);"
         aria-hidden="false" 
         aria-label="Example home icon" 
         fontIcon="logout" 
-        title="logout"
+        title="log out"
         class="lg-logout"
         (click)="logout()"></mat-icon>
        

@@ -1,24 +1,21 @@
-<section >
+<section>
   <article>
     <div class="add-icons">
-      <button mat-raised-button color="primary" (click)="onAdd()">
-          <p>Add Holiday</p>
-          <mat-icon>add</mat-icon>
+      <button mat-raised-button color="primary" (click)="handleChanges('add')">
+        <p>Add Holiday</p>
+        <mat-icon>add</mat-icon>
       </button>
-  </div>
-  <mat-form-field appearance="outline">
-    <mat-label>Filter</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Ex. Mia"
-      #input
-    />
-  </mat-form-field>
-
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Filter</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Ex. Mia"
+        #input
+      />
+    </mat-form-field>
   </article>
-   
- 
 
   <div class="lds-roller" *ngIf="isLoading">
     <div></div>
@@ -32,47 +29,74 @@
     <span>Loading Please wait.......</span>
   </div>
   <div class="outer-layer">
-    <div class="container" *ngIf="dataSource" cdkDropList (cdkDropListDropped)="drop($event)">
-
-        <div 
-          [style.backgroundColor]="getBackgroundColor(holiday.date)"
-          class="card" *ngFor="let holiday of dataSource.filteredData" cdkDragBoundary=".container" cdkDrag>
-          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            <div class="left">
-                <div class="header">
-                    <h1>{{holiday.event | titlecase}}</h1>    
-                </div>
-                <div class="desc">
-                    <p>{{holiday.description | titlecase}}</p>
-                </div>
-                <div class="date">
-                    <h2>{{holiday.date | date:'dd-MM-yyyy'}}</h2>
-                </div>    
-                <div class="type">
-                    <p [style.backgroundColor]="holiday.type==='National'?'#6759ff':'#ffc99b'">{{holiday.type}} Holiday</p>
-                </div>    
-            </div>
-            <div class="right">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="onEdit(holiday.key)">
-                      <mat-icon>edit</mat-icon>
-                      <span>Edit</span>
-                    </button>
-                    <button mat-menu-item  (click)="onDelete(holiday.key,holiday.event)">
-                      <mat-icon>delete</mat-icon>
-                      <span>Delete</span>
-                    </button>
-                  </mat-menu>
-            </div>
-            
+    <div
+      class="container"
+      *ngIf="!isLoading"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div
+        [style.backgroundColor]="
+          isUpcoming(holiday.date) ? '#ffffff' : '#f2f2f2'
+        "
+        class="card"
+        *ngFor="let holiday of dataSource.filteredData | holidayAsc"
+        cdkDragBoundary=".container"
+        cdkDrag
+      >
+        <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="left">
+          <!-- event Name -->
+          <div class="header">
+            <h1>{{ holiday.event | titlecase }}</h1>
+          </div>
+          <!-- Description -->
+          <div class="desc">
+            <p>{{ holiday.description | titlecase }}</p>
+          </div>
+          <!-- Date -->
+          <div class="date">
+            <h2>{{ holiday.date | date : "dd-MM-yyyy" }}</h2>
+          </div>
+          <!-- Type -->
+          <div class="type">
+            <p
+              [style.backgroundColor]="
+                holiday.type === 'National' ? '#6759ff' : '#ffc99b'
+              "
+            >
+              {{ holiday.type }} Holiday
+            </p>
+          </div>
         </div>
-        
-       
+        <!-- Edit and Delete action -->
+        <div class="right">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button
+              [disabled]="!isUpcoming(holiday.date)"
+              mat-menu-item
+              (click)="handleChanges('edit', holiday.key)"
+            >
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button
+              mat-menu-item
+              (click)="handleChanges('delete', holiday.key, holiday.event)"
+            >
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
     </div>
   </div>
-   
-
 </section>

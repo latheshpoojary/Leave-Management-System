@@ -1,0 +1,83 @@
+<div class="form-pop-up">
+    <div class="header">
+        <h1 mat-dialog-title>{{data.key?'Update':'Add'}} Employee</h1>
+    </div>
+    <!-- user form start here -->
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <!-- Name -->
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input
+              appearance="outline"
+              type="text"
+              matInput
+              placeholder="Ex. Tom"
+              formControlName="name"
+            />
+        </mat-form-field>
+    <!-- Designation -->
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Designation</mat-label>
+            <input
+              appearance="outline"
+              type="text"
+              matInput
+              placeholder="Ex.Software Engineer"
+              formControlName="designation"
+            />
+        </mat-form-field>
+      <!-- Role -->
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              <mat-option value="client">Client</mat-option>
+              <mat-option value="Employee">Employee</mat-option>
+            </mat-select>
+        </mat-form-field>
+      <!-- email -->
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              matInput
+              placeholder="Ex. pat@example.com"
+              formControlName="email"
+            />
+            <mat-error *ngIf="userForm.get('email')?.hasError('pattern')">Invalid email</mat-error>
+        </mat-form-field>
+      <!-- Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <mat-error ></mat-error>
+          <button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" class="eye">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      <!-- confirm Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm password</mat-label>
+          <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="confirm_password">
+         <mat-error *ngIf="userForm.get('confirm_password')?.dirty && userForm.get('confirm_password')?.hasError('passwordShouldMatch')">Password not Matched</mat-error>
+          <button type="button" matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2" class="eye">
+            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      <!-- Cancel and Save action -->
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button 
+            style="color: black;"
+            [mat-dialog-close]="false">
+              Close
+            </button>
+            <button 
+                [disabled]="userForm.invalid"
+                mat-raised-button 
+                
+                style="background-color: var(--third-color)">
+              {{data.key?'Update':'Add'}}
+            </button>
+        </div>
+    </form> 
+  </div>

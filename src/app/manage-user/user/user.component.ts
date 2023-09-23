@@ -1,15 +1,14 @@
-import { AfterViewInit, Component,ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild,OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTableDataSourcePaginator } from '@angular/material/table';
-import { UserDetails, UserService } from 'src/app/shared/services/user/user.service';
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { UserFormComponent } from '../user-form/user-form.component';
-import { CanDeactivateFn } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from 'src/app/shared/services/user/user.service';
+import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
+import { UserFormComponent } from '../../shared/user-form/user-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { DataSource } from '@angular/cdk/collections';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { Observable } from 'rxjs';
 
 export interface UserData {
   id: string;
@@ -21,46 +20,33 @@ export interface UserData {
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
-
 })
-
-export class UserComponent implements AfterViewInit{
-  showForm = false;
-  employeeList!: UserDetails[];
-  isLoading = false;
-  isEditMode = false;
-  editKey!: string;
-  deleteKey !:string;
+export class UserComponent implements AfterViewInit,OnInit {
+  isLoading!: boolean;
+  dialogueRes$!: Observable<any>;
   /** Constants used to fill up our data base. */
+  dataSource=new  MatTableDataSource<any>;
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'designation', "role", "action"];
-  dataSource!: MatTableDataSource<any>;
+  displayedColumns: string[] = [
+    'id',  
+    'name',
+    'email',
+    'designation',
+    'role',
+    'action',
+  ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  dataInitialized!: boolean;
 
-  constructor( private userService: UserService, private dialog: MatDialog,private _snackBar: MatSnackBar) {
-  }
+  constructor(
+    readonly userService: UserService,
+    readonly _snackBar: MatSnackBar,
+    readonly commonService: CommonService
+  ) {}
 
   ngOnInit() {
-    // let maxUserId;
-    this.userService.getAllEmployees().subscribe(response => {
-      const employeeList = response;
-      if(response.length!=0){
-        this.userService.userId$.next(response.reduce((max: number, obj: { userId: number; }) => (obj.userId > max ? obj.userId : max), -Infinity)+1);
-      //  console.log("Maximum User ID:", maxUserId);
-       ;      
-      }
-      console.log(employeeList);
-      this.dataSource = new MatTableDataSource(employeeList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      console.log(this.dataSource);
-      console.log(this.dataSource);
-      
-    });
-    // this.isLoading = false;
+    this.fetchEmployee();
   }
 
   ngAfterViewInit(): void {
@@ -68,22 +54,23 @@ export class UserComponent implements AfterViewInit{
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     } catch (error) {
-      
+      console.log(error);
     }
-    
   }
 
   fetchEmployee() {
-    // this.isLoading = true;
     this.userService.getAllEmployees().subscribe(response => {
-      // this.isLoading = false;
-      this.userService.userId$.next(response.reduce((max: number, obj: { id: number; }) => (obj.id > max ? obj.id : max), -Infinity)+1);
-      const employeeList = response;
-      this.dataSource = new MatTableDataSource(employeeList);
-      this.dataSource.paginator =this.paginator ;
+      if (response.length !== 0) {
+        this.userService.userId$.next(
+          response.reduce(
+            (max: number, obj: { id: number }) => (obj.id > max ? obj.id : max),
+            0
+          ) + 1
+        );
+      }
+      this.dataSource.data= response;
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      
-      console.log(this.dataSource);
     });
   }
 
@@ -95,59 +82,56 @@ export class UserComponent implements AfterViewInit{
     }
   }
 
+  /**
+   * drag and drop the item
+   * @param event
+   */
+
   drop(event: CdkDragDrop<string[]>) {
     const dataArray = this.dataSource.data;
-    moveItemInArray(dataArray , event.previousIndex, event.currentIndex);
+    moveItemInArray(dataArray, event.previousIndex, event.currentIndex);
     this.dataSource.data = dataArray;
-
-  }
-  
-  // reset the form after submission
-  onAdd(){
-    this.openDialogue(UserFormComponent);
   }
 
-  onEdit(key: any) {
-    console.log("Edit Key",key);
-    
-   this.editKey = key;
-   this.openDialogue(UserFormComponent,this.editKey);
+  /**
+   * reload the user data and create user Id
+   */
+
+  handleChanges(operation: string, key?: string, title?: string) {
+    let component;
+    if (operation === 'add' || operation === 'edit') {
+      component = UserFormComponent;
+    } else {
+      component = DeleteDialogComponent;
+    }
+    this.dialogueRes$ = this.commonService.openDialogue(
+      component,
+      '',
+      key,
+      title,
+      'Are you sure want to delete '
+    );
+    this.afterDialogueClosed(key);
   }
 
-  onDelete(key: string,title:string) {
-    this.deleteKey = key;
-   this.openDialogue(DeleteDialogComponent,this.deleteKey,title);
-  }
-
-  openDialogue(component:any,key?:string,title?:string){
-    const popRef=this.dialog.open(component,{
-     width:"min(80%,800px)",
-     data:{
-      key:key,
-      title:title
-     }
-     
-    })
-    popRef.afterClosed().subscribe(response=>{ 
-      console.log(response,"response from the pop up");
-      
-      if(response){
-        this.userService.deleteEmployee(this.deleteKey).subscribe(response => {
+  /**
+   * after dialogue closed read the response and perform action.
+   */
+  afterDialogueClosed(key: string | undefined) {
+    this.dialogueRes$.subscribe(response => {
+      if (response === 'success') {
+        this.fetchEmployee();
+      } else if (response) {
+        this.userService.deleteEmployee(key).subscribe(() => {
           this.fetchEmployee();
-          this._snackBar.open("User Deleted Successfully","close",{
-            duration:2000
-          })
-        })
+          this._snackBar.open('User Deleted Successfully', 'close', {
+            duration: 2000,
+          });
+        });
       }
       else{
-        this.fetchEmployee();
+        return;
       }
-         
-        
- 
-    })
+    });
   }
-
 }
-
-/** Builds and returns a new User. */

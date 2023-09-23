@@ -1,65 +1,162 @@
-.align {
-  position: fixed;
+section {
+  position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100svh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url("../../shared/images/backgroundImage3.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
+  flex-direction: row-reverse;
 
-.register {
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  width: 80%; /* Adjusted width for responsiveness */
-  max-width: 400px;
-  min-width: 300px;
-  background:rgba(255, 250, 250, 0.7);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    color: var(--third-color);
-  }
-  form {
-    width: 100%;
+  align-items: center;
+  // background-image: url("../../shared/images/backgroundImage3.jpg");
+  // background-position: center center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-attachment: fixed;
+  .welcome {
+    position: relative;
+    width: 60%;
+    height: 100%;
+    background-color: var(--third-color);
+    color: var(--button-color);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    mat-form-field{
-      width: 100%;
-      margin-bottom: 1rem;
-      button{
-        background-color: transparent;
-        border: none;
-        padding: 1rem;
-        color: black;
-      }
-    } 
-    }
-    button{
-      width: 100%;
-      padding: 1.5rem;
-      color: var(--button-color);
-    }
-    
-    
-  }
+    justify-content: flex-end;
+    padding: 2rem;
 
+    background-image: url("../../shared/images/fabrizio-conti-FoY_p4LoPSM-unsplash.jpg");
+    background-position: center;
+    background-size: cover;
+    h1 {
+      position: absolute;
+      top: 50%;
+      // width: 100%;
+      color: #ffff;
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: 7px;
+      line-height: 1;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    p {
+      position: absolute;
+      top: 60%;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      line-height: 1.5;
+    }
+  }
+  .login {
+    position: relative;
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    .register {
+      // border: 2px solid rgba(255, 255, 255, 0.5);
+      // margin: auto;
+      width: 100%; /* Adjusted width for responsiveness */
+      max-width: 450px;
+      // min-width: 300px;
+      // background:rgba(255, 250, 250, 0.7);
+      // border-radius: 20px;
+      // backdrop-filter: blur(10px);
+      // box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+
+      img {
+        height: 50px;
+        margin-bottom: 2rem;
+      }
+      .heading {
+        // padding-bottom: 3rem;
+        h1 {
+          font-size: 2rem;
+          font-weight: 700;
+          margin: 0;
+          line-height: 3rem;
+        }
+        p {
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--third-color);
+          line-height: 1.5;
+          color: #9a9a9a;
+          span {
+            font-size: 2.7rem;
+            color: var(--third-color);
+          }
+        }
+      }
+
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        mat-form-field {
+          width: 100%;
+          margin-bottom: 1rem;
+          button {
+            background-color: transparent;
+            border: none;
+            padding: 1rem;
+            color: black;
+          }
+        }
+      }
+      button {
+        width: 100%;
+        padding: 1.5rem;
+        color: var(--button-color);
+      }
+    }
+    footer {
+      position: absolute;
+      bottom: 10px;
+    }
+  }
+}
 
 @media (max-width: 768px) {
-  .register .form__field input {
-    padding: 3rem;
-    font-size: 1.5rem; /* You can adjust the height as needed */
+  section {
+    .welcome {
+      width: 0%;
+      padding: 0;
+      display: none;
+    }
+    .login {
+      width: 100%;
+      // height: 100vh;
+      background-image: url("../../shared/images/fabrizio-conti-FoY_p4LoPSM-unsplash.jpg");
+      background-position: inherit;
+      background-color: rgba(0,0,0,0.2);
+      background-size:  cover;
+      background-repeat: no-repeat;
+      padding: 0;
+      .register {
+        margin-inline: auto;
+        img{
+          margin-bottom: 5rem;
+        }
+      }
+      .register .form__field input {
+        padding: 3rem;
+        font-size: 1.5rem;
+        background-color: var(
+          --secondary-color
+        ); /* You can adjust the height as needed */
+      }
+      .form {
+        width: 100%;
+        border-radius: var(--border-radius);
+        padding: 2.5rem;
+        background-color: rgba(253, 253, 253, 0.6);
+        // backdrop-filter: blur(29px);
+      }
+    }
   }
-
 }

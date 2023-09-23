@@ -3,7 +3,7 @@
     <div class="action-header">
       <button
         mat-raised-button
-        (click)="onAdd()"
+        (click)="handleChanges('add')"
       >
        <p>Add User</p>
        <mat-icon>add</mat-icon>
@@ -38,9 +38,8 @@
 
   <div class="table-container" *ngIf="!isLoading ">
     <div class="mat-elevation-z8">
-       
+           <!-- table to show the user details -->
         <table mat-table [dataSource]="dataSource" matSort cdkDropList (cdkDropListDropped)="drop($event)">
-           
         <!-- ID Column -->
         <ng-container matColumnDef="id" >
           <th mat-header-cell *matHeaderCellDef mat-sort-header >ID</th>
@@ -79,7 +78,7 @@
               mat-mini-fab
               style="background-color: var(--third-color)"
               aria-label="Example icon button with a bookmark icon"
-              (click)="onEdit(row.key)"
+              (click)="handleChanges('edit',row.key)"
             >
               <mat-icon>edit</mat-icon>
             </button>
@@ -87,7 +86,7 @@
               mat-mini-fab
               color="warn"
               aria-label="Example icon button with a bookmark icon"
-              (click)="onDelete(row.key,row.name)"
+              (click)="handleChanges('delete',row.key,row.name)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -108,7 +107,6 @@
           </td>
         </tr>
       </table>
-    <!-- </ng-container> -->
   </div>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 25, 100]"

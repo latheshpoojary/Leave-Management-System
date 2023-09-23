@@ -101,6 +101,10 @@ section{
           width: 100% !important;
           height: 10vh;
           text-align: center;
+          .empty-list{
+            font-size: 1.5rem;
+            font-weight: 500;
+          }
           .mat-cell{
             width: 100%;
           }

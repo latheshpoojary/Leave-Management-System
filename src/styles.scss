@@ -11,6 +11,8 @@
   font-size: min(4vw,16px);
   --button-color:#fff;
   --border-radius:8px;
+
+
 }
 
 html, body { height: 100%; }
@@ -19,4 +21,11 @@ body {
  
 }
 
+.mat-mdc-raised-button{
+  box-shadow: none !important;
+}
 
+.mdc-dialog{
+  width: fit-content !important;
+  margin-inline: auto !important;
+}

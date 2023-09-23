@@ -1,7 +1,7 @@
 <section>
   <article>
     <div class="header">
-      <button mat-raised-button color="primary" (click)="onAdd()">
+      <button mat-raised-button color="primary" (click)="handleChange('add')">
         <p>
           Apply Leaves
         </p>
@@ -106,7 +106,7 @@
               [disabled]="row.status!=='pending'"
               style="background-color: var(--third-color)"
               aria-label="Example icon button with a bookmark icon"
-              (click)="onEdit(row.id)"
+              (click)="handleChange('edit',row.id)"
             >
             <mat-icon>edit</mat-icon>
             </button>
@@ -115,7 +115,7 @@
               [disabled]="row.status!=='pending'"
               color="warn"
               aria-label="Example icon button with a bookmark icon"
-              (click)="onDelete(row.id)"
+              (click)="handleChange('delete',row.id)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -131,8 +131,8 @@
 
         <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="6">
-            No Leave Applied
+          <td class="mat-cell" colspan="6" class="empty-list">
+            Leave List is Empty
           </td>
         </tr>
       </table>
