@@ -49,7 +49,11 @@ describe('HolidayComponent', () => {
         CdkDropList,
         MatSnackBarModule
       ],
-      providers:[TitleCasePipe,MAT_DIALOG_DATA]
+      providers:[TitleCasePipe,{
+        provider:MAT_DIALOG_DATA,
+        useValue:{}
+      }
+        ]
     });
     fixture = TestBed.createComponent(HolidayComponent);
     component = fixture.componentInstance;

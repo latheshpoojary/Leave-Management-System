@@ -39,7 +39,7 @@ export class HolidayService {
    * @returns 
    */
   getHolidayById(key:string){
-    return this.http.get('https://leave-management-system-b6f99-default-rtdb.firebaseio.com/holidays/'+key+'.json');
+    return this.http.get(`https://leave-management-system-b6f99-default-rtdb.firebaseio.com/holidays/${key}.json`);
   }
 
 

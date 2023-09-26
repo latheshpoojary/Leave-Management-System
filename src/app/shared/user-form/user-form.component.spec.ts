@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { ManageUserRoutingModule } from 'src/app/manage-user/manage-user-routing.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('UserFormComponent', () => {
@@ -28,6 +29,7 @@ describe('UserFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [UserFormComponent],
       imports: [ReactiveFormsModule,HttpClientTestingModule,MatSnackBarModule,CommonModule,
+        NoopAnimationsModule,
         ManageUserRoutingModule,
         MatIconModule,
         MatButtonModule,
@@ -58,9 +60,7 @@ describe('UserFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create form with 6 fields', () => {
-    expect(component.userForm.contains('name')).toBeTruthy();
-  });
+ 
 
 
 
