@@ -1,4 +1,4 @@
-import { Component, ViewChild,AfterViewInit } from '@angular/core';
+import { Component, ViewChild,AfterViewInit ,OnInit} from '@angular/core';
 import { RequestService } from 'src/app/shared/services/leave-request/request.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,7 +11,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   templateUrl: './leave-request.component.html',
   styleUrls: ['./leave-request.component.scss'],
 })
-export class LeaveRequestComponent implements AfterViewInit{
+export class LeaveRequestComponent implements OnInit, AfterViewInit{
   leaveRequest!: any[];
   displayedColumns: string[] = ['userId', 'from', 'to', 'reason', 'type', 'action'];
   dataSource!: MatTableDataSource<any>;
@@ -19,8 +19,13 @@ export class LeaveRequestComponent implements AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
   input: any;
   constructor(readonly requestService: RequestService, readonly _snackBar: MatSnackBar) {
+    
+  }
+  ngOnInit(): void {
     this.loadLeaveRequest();
   }
+
+  
 
   ngAfterViewInit() {
     try {
@@ -28,7 +33,6 @@ export class LeaveRequestComponent implements AfterViewInit{
       this.dataSource.sort = this.sort;
     } catch (error) {
       console.log(error);
-      
     }
   }
 
@@ -52,6 +56,8 @@ export class LeaveRequestComponent implements AfterViewInit{
    */
   loadLeaveRequest() {
     this.requestService.getAllLeaves().subscribe((response: any) => {
+      console.log(response);
+      
       this.leaveRequest = response;
       this.dataSource = new MatTableDataSource(this.leaveRequest);
       this.dataSource.paginator = this.paginator;

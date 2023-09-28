@@ -1,7 +1,11 @@
 <section>
   <article>
     <div class="add-icons">
-      <button mat-raised-button color="primary" (click)="handleChanges('add')">
+      <button 
+        class="addbtn"
+        mat-raised-button 
+        color="primary"
+        (click)="handleChanges('add')">
         <p>Add Holiday</p>
         <mat-icon>add</mat-icon>
       </button>
@@ -80,6 +84,7 @@
           </button>
           <mat-menu #menu="matMenu">
             <button
+              class="editBtn"
               [disabled]="!isUpcoming(holiday.date)"
               mat-menu-item
               (click)="handleChanges('edit', holiday.key)"
@@ -88,6 +93,7 @@
               <span>Edit</span>
             </button>
             <button
+              class="deleteBtn"
               mat-menu-item
               (click)="handleChanges('delete', holiday.key, holiday.event)"
             >

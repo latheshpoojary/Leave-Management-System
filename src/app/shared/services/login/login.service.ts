@@ -19,7 +19,6 @@ export class LoginService {
   isAuthenticated = '';
   userKey!: string;
   constructor(readonly http: HttpClient) {
-    console.log('Login Service instantiated');
   }
 
   /**
@@ -29,7 +28,6 @@ export class LoginService {
    * @returns
    */
   sayHello() {
-    console.log('hello');
     return true;
   }
 
@@ -104,6 +102,7 @@ export class LoginService {
    */
 
   errorHandler(errorRes: HttpErrorResponse) {
+
     let errorMessage = 'UnKnown Error Occurred';
     if (!errorRes.error && !errorRes.error.error) {
       return throwError(() => new Error(errorMessage));

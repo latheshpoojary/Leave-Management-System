@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LeaveRequestComponent } from './leave-request.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -19,6 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { ManageLeaveRequestRoutingModule } from '../manage-leave-request-routing.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RequestService } from 'src/app/shared/services/leave-request/request.service';
 
 describe('LeaveRequestComponent', () => {
   let component: LeaveRequestComponent;
@@ -29,10 +29,9 @@ describe('LeaveRequestComponent', () => {
       declarations: [LeaveRequestComponent],
       imports: [
         NoopAnimationsModule,
-        HttpClientModule,
+        HttpClientModule ,
         MatSnackBarModule,
         MatFormFieldModule,
-        HttpClientModule,
         CommonModule,
         ManageLeaveRequestRoutingModule,
         MatButtonModule,
@@ -52,13 +51,25 @@ describe('LeaveRequestComponent', () => {
         CdkDragPlaceholder,
         CdkDropList,
       ],
+      providers:[
+        {
+          provide:RequestService,
+        }
+      ]
     });
     fixture = TestBed.createComponent(LeaveRequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+
+  
+  it('should call the loadLeaveRequest',()=>{
+      component.ngOnInit();
+    })
+ })
+

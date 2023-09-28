@@ -56,8 +56,6 @@ export class LeaveFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.leaveForm.controls);
-
     if (this.data.leaveKey) {
       this.leaveService
         .editLeave(this.data.leaveKey, this.data.key, this.leaveForm.value)

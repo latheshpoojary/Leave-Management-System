@@ -44,7 +44,6 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.key) {
       //getting edit key
-      console.log(this.data.key, 'key here');
 
       this.setFormData(this.data.key);
     }

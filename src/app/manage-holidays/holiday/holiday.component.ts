@@ -59,8 +59,6 @@ export class HolidayComponent implements OnInit {
     this.isLoading = true;
     this.holidayService.getAllHolidays().subscribe(response => {
       this.isLoading = false;
-      console.log(response);
-      
       this.holidays = response;
       if (response.length > 0) {
         this.dataSource.data = response;

@@ -161,7 +161,6 @@ export class UserService {
    * @returns
    */
   errorHandler(errorRes: HttpErrorResponse) {
-    console.log(errorRes, 'From ErrorHandler');
 
     let errorMessage = 'UnKnown Error Occurred';
     if (!errorRes?.error || !errorRes?.error?.error) {
