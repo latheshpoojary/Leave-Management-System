@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-leave-request',
@@ -18,7 +19,7 @@ export class LeaveRequestComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   input: any;
-  constructor(readonly requestService: RequestService, readonly _snackBar: MatSnackBar) {
+  constructor(readonly requestService: RequestService, readonly _snackBar: MatSnackBar,) {
     
   }
   ngOnInit(): void {

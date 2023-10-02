@@ -98,6 +98,8 @@ export class UserFormComponent implements OnInit {
   //editing form data
   setFormData(key: string) {
     this.userService.getEmployeeByKey(key).subscribe((response: any) => {
+      console.log(response,"user Form");
+      
       this.userForm.patchValue({
         name: response['name'],
         designation: response['designation'],

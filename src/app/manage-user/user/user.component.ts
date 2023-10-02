@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 export interface UserData {
   id: string;
@@ -42,7 +43,7 @@ export class UserComponent implements AfterViewInit,OnInit {
   constructor(
     readonly userService: UserService,
     readonly _snackBar: MatSnackBar,
-    readonly commonService: CommonService
+    readonly commonService: CommonService,
   ) {}
 
   ngOnInit() {
@@ -60,6 +61,7 @@ export class UserComponent implements AfterViewInit,OnInit {
 
   fetchEmployee() {
     this.userService.getAllEmployees().subscribe(response => {
+            
       if (response.length !== 0) {
         this.userService.userId$.next(
           response.reduce(

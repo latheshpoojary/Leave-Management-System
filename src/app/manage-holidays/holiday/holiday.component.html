@@ -1,11 +1,12 @@
 <section>
   <article>
     <div class="add-icons">
-      <button 
+      <button
         class="addbtn"
-        mat-raised-button 
+        mat-raised-button
         color="primary"
-        (click)="handleChanges('add')">
+        (click)="handleChanges('add')"
+      >
         <p>Add Holiday</p>
         <mat-icon>add</mat-icon>
       </button>
@@ -21,7 +22,7 @@
     </mat-form-field>
   </article>
 
-  <div class="lds-roller" *ngIf="isLoading">
+  <!-- <div class="lds-roller" *ngIf="isLoading">
     <div></div>
     <div></div>
     <div></div>
@@ -31,7 +32,7 @@
     <div></div>
     <div></div>
     <span>Loading Please wait.......</span>
-  </div>
+  </div> -->
   <div class="outer-layer">
     <div
       class="container"
@@ -106,3 +107,58 @@
     </div>
   </div>
 </section>
+<div
+  *ngIf="isLoading"
+  style="
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+    gap: 1rem;
+  "
+>
+  <div
+    *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+    class="card-skeleton"
+    style="
+      width: 472px;
+      height: 217px;
+      border: 1px solid rgb(185, 182, 182);
+      padding: 1.5rem;
+      display: flex;
+    "
+  >
+    <div class="right">
+      <div class="header">
+        <ngx-skeleton-loader
+          [theme]="{
+            width: '218px',
+            height: '32px'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div class="decs">
+        <ngx-skeleton-loader
+          [theme]="{
+            width: '374px',
+            height: '20px'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div class="date">
+        <ngx-skeleton-loader
+          [theme]="{
+            width: '374px',
+            height: '32px'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div class="type">
+        <ngx-skeleton-loader
+          [theme]="{
+            width: '144px',
+            height: '36px'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+    </div>
+  </div>
+</div>

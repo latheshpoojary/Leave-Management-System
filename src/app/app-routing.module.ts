@@ -19,30 +19,54 @@ const routes: Routes = [
   {
     path:'login',
     component:LoginComponent,
+    data:{
+      title:'Login Page',
+      description:'Login Page with Email and Password Fields'
+    }
   },
   {
     path:'dashboard',
     component:SidebarComponent,canActivate:[loginGuard],
+    data:{
+      title:"Home",
+      description:'The Page shows the Sidebar with all the Routing Component'
+    },
     children:[
       {
         path:'user',
         loadChildren:()=>import('../app/manage-user/manage-user.module').then(()=>ManageUserModule),
-        canActivate:[loginGuard,adminGuard],       
+        canActivate:[loginGuard,adminGuard],  
+        data:{
+          title:'User',
+          description:'User Info such as Adding,Deleting and Updating'
+        }     
       },
       {
         path:'holidays',
         loadChildren:()=>import('../app/manage-holidays/manage-holidays.module').then(()=>ManageHolidaysModule),
         canActivate:[loginGuard,adminGuard],
+        data:{
+          title:'Holiday',
+          description:'Holiday Info such as Adding,Deleting and Updating'
+        }
       },
       {
         path:'request',
         loadChildren:()=>import('../app/manage-leave-request/manage-leave-request.module').then(()=>ManageLeaveRequestModule),
         canActivate:[loginGuard,adminGuard],
+        data:{
+          title:'Leave Request',
+          description:'Request Info such as Adding,Deleting and Updating'
+        }
       },
       {
         path:'leaves',
         loadChildren:()=>import('../app/manage-leave-list/manage-leave-list-routing.module').then(()=>ManageLeaveListModule),
         canActivate:[userGuard],
+        data:{
+          title:'Leaves',
+          description:'Leave Request Info such as Adding,Deleting and Updating'
+        }
       },
     ],   
   },

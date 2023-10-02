@@ -46,13 +46,17 @@ export class LeaveFormComponent implements OnInit {
     this.leaveService
       .fetchLeaveByKey(this.data.leaveKey, this.data.key)
       .subscribe((response: any) => {
+        console.log(response,"response");
+        
         this.leaveForm.setValue({
           from: response['from'],
           to: response['to'],
           type: response['type'],
           reason: response['reason'],
         });
-      });
+      }
+      
+      );      
   }
 
   onSubmit() {

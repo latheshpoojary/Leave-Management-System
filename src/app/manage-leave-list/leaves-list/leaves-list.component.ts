@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LeaveService } from 'src/app/shared/services/leaves/leave.service';
 import { LeaveFormComponent } from '../leave-form/leave-form.component';
@@ -10,13 +10,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-leaves-list',
   templateUrl: './leaves-list.component.html',
   styleUrls: ['./leaves-list.component.scss'],
 })
-export class LeavesListComponent {
+export class LeavesListComponent implements OnInit{
   public leaves: any[] = [];
   displayedColumns: string[] = [
     'from',
@@ -36,8 +37,11 @@ export class LeavesListComponent {
     public leaveService: LeaveService,
     readonly dialogue: MatDialog,
     readonly _snackBar: MatSnackBar,
-    readonly commonService: CommonService
+    readonly commonService: CommonService,
   ) {
+   
+  }
+  ngOnInit(): void {
     this.userKey = localStorage.getItem('user');
     this.leaveService.fetchLeave(this.userKey).subscribe((response: any) => {
       this.leaves = response;

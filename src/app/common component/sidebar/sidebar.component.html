@@ -8,7 +8,7 @@
     </mat-toolbar>
     <mat-nav-list>
       
-      <div mat-list-item class="list" *ngIf="isAdmin" routerLink="user" routerLinkActive="active">
+      <div mat-list-item class="list" *ngIf="isAdmin" routerLink="user" routerLinkActive="active" >
         <mat-icon>group</mat-icon>
         <a  >
           <span>Employee</span>
@@ -28,7 +28,7 @@
       </div>
       <div mat-list-item class="list" *ngIf="!isAdmin" routerLink="leaves" routerLinkActive="active">
         <mat-icon>event_note</mat-icon>
-        <a   >
+        <a>
           <span>Leave List</span>
         </a>
       </div>
@@ -55,6 +55,8 @@
       <span style="color: white;">
         <img src="../../../assets/images/logo-no-backgroundText.svg" alt="">
       </span>
+      <h2 style="color: white;"
+      >{{titleName}}</h2>
       <mat-icon 
         style="color: var(--button-color);"
         aria-hidden="false" 

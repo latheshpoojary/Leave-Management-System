@@ -54,7 +54,12 @@ describe('DeleteDialogComponent', () => {
       providers: [
         {
           provide: MAT_DIALOG_DATA,
-          useValue: {},
+          useValue: {
+            titleText:'hello',
+            title:'hi',
+            buttonText:'Delete',
+            bodyText:'hello there'
+          },
         },
         {
           provide: MatDialogRef,
@@ -70,4 +75,23 @@ describe('DeleteDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display title in the view',()=>{
+    const dom:HTMLElement = fixture.nativeElement;
+    const h1 = dom.querySelector('.title');
+    expect(h1?.textContent).toEqual('Log Out')
+  
+  })
+  it('should display button text to delete',()=>{
+    
+    const dom:HTMLElement = fixture.debugElement.nativeElement;
+    const button = dom.querySelector('.button');
+    expect(button?.textContent).toBe(' Delete ')
+  })
+  it('should display body text',()=>{
+    
+    const dom:HTMLElement = fixture.debugElement.nativeElement;
+    const h3= dom.querySelector('h3');
+    expect(h3?.textContent).toBe('hello there hi ?')
+  })
 });

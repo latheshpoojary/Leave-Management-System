@@ -9,6 +9,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TitleCasePipe } from '@angular/common';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-holiday',
   templateUrl: './holiday.component.html',
@@ -24,7 +25,7 @@ export class HolidayComponent implements OnInit {
     readonly dialogue: MatDialog,
     readonly _snackBar: MatSnackBar,
     readonly titleCase: TitleCasePipe,
-    readonly commonService: CommonService
+    readonly commonService: CommonService,
   ) {}
 
   ngOnInit(): void {
